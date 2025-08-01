@@ -33,7 +33,10 @@ animations = [{
 "name": &"idle",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_g0g1r")
+}],
 "loop": true,
 "name": &"jump",
 "speed": 5.0
@@ -74,7 +77,7 @@ script = ExtResource("1_2be4l")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
 position = Vector2(169, 530)
 sprite_frames = SubResource("SpriteFrames_gju3c")
-animation = &"walk"
+animation = &"jump"
 script = ExtResource("3_y00gc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
@@ -83,6 +86,10 @@ shape = SubResource("RectangleShape2D_y00gc")
 
 [node name="InputManager" type="Node2D" parent="Player"]
 script = ExtResource("5_3pjhv")
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(330.667, 519)
+scale = Vector2(0.333333, 0.333333)
 
 [node name="TestFloor" type="Node2D" parent="."]
 
