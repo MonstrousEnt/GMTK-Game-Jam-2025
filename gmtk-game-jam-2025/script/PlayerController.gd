@@ -1,23 +1,30 @@
 extends CharacterBody2D
-@export var speed = 250
-@export var jumpForce = 450
-@export var gravity = 980
-@export var acceleration = 600
-@export var deceleration = 2400
-@export var coyote_time = 0.1
-@export var jump_buffer_time = 0.1
-@export var jump_cut_gravity_multiplier = 2.0
-@export var air_acceleration = 600 # For air control
-@export var air_deceleration = 2400 # For air control
+
+@export var speed: float = 250
+@export var jumpForce: float = 450
+@export var gravity: float = 980
+@export var acceleration: float = 600
+@export var deceleration: float = 2400
+@export var coyote_time: float = 0.1
+@export var jump_buffer_time: float = 0.1
+@export var jump_cut_gravity_multiplier: float = 2.0
+@export var air_acceleration: float = 600 # For air control
+@export var air_deceleration: float = 2400 # For air control
 
 @onready var player_anim_controller = $"AnimatedSprite2D"
 @onready var input_manager = $"InputManager"
 
-var camera_rotation_state = 0
-var coyote_timer = 0.0
-var jump_buffer_timer = 0.0
+var camera_rotation_state: int = 0
+var coyote_timer: float = 0.0
+var jump_buffer_timer: float = 0.0
 
-func _physics_process(delta):
+func _physics_process(delta) -> void:
+	apply_gravity(delta)
+	move_player(delta)
+	jump(delta)
+	move_and_slide()
+
+func apply_gravity(delta) -> void:
 	# --- GRAVITY AND TIMERS ---
 	if not is_on_floor():
 		velocity.y += gravity * delta
@@ -25,10 +32,7 @@ func _physics_process(delta):
 	else:
 		coyote_timer = coyote_time
 
-	# Cut the jump short if button is released and character is still rising.
-	if input_manager.is_action_just_released("jump") and velocity.y < 0:
-		velocity.y = velocity.y / jump_cut_gravity_multiplier
-
+func move_player(delta) -> void:
 	# --- HORIZONTAL MOVEMENT ---
 	var input_x = 0
 	# Check the logical actions defined in your InputManager
@@ -59,7 +63,12 @@ func _physics_process(delta):
 		else:
 			velocity.x = move_toward(velocity.x, 0, air_deceleration * delta)
 
-	# --- JUMP BUFFER ---
+func jump(delta) -> void:
+		# Cut the jump short if button is released and character is still rising.
+	if input_manager.is_action_just_released("jump") and velocity.y < 0:
+		velocity.y = velocity.y / jump_cut_gravity_multiplier
+		
+		# --- JUMP BUFFER ---
 	if Input.is_action_just_pressed("jump") and is_on_floor():
 		# If the jump was just pressed, buffer the command.
 		jump_buffer_timer = jump_buffer_time
@@ -76,5 +85,3 @@ func _physics_process(delta):
 		coyote_timer = 0
 		jump_buffer_timer = 0
 		# TODO: Add sound here!
-	
-	move_and_slide()
