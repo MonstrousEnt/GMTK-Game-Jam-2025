@@ -1,10 +1,10 @@
 [gd_scene load_steps=12 format=3 uid="uid://xy4iq88w5vq3"]
 
-[ext_resource type="Script" uid="uid://vrp1dukmiq17" path="res://script/PlayerController.gd" id="1_617v1"]
-[ext_resource type="Texture2D" uid="uid://bi73bgfo5lj6y" path="res://sprites/placeholder_idle.png" id="2_k7aqk"]
-[ext_resource type="Texture2D" uid="uid://dishd4vr77cgq" path="res://sprites/placeholder_alien.png" id="3_udifs"]
-[ext_resource type="Script" uid="uid://c77oddhm0ylxd" path="res://script/PlayerAnimController.gd" id="4_rpba7"]
-[ext_resource type="Script" uid="uid://dnjw665d0a14v" path="res://script/input_manager.gd" id="5_43tkh"]
+[ext_resource type="Script" uid="uid://vrp1dukmiq17" path="res://Script/Player/PlayerController.gd" id="1_617v1"]
+[ext_resource type="Texture2D" uid="uid://bi73bgfo5lj6y" path="res://Sprites/Placeholder/placeholder_idle.png" id="2_k7aqk"]
+[ext_resource type="Texture2D" uid="uid://dishd4vr77cgq" path="res://Sprites/Placeholder/placeholder_alien.png" id="3_udifs"]
+[ext_resource type="Script" uid="uid://c77oddhm0ylxd" path="res://Script/Player/PlayerAnimController.gd" id="4_rpba7"]
+[ext_resource type="Script" uid="uid://dnjw665d0a14v" path="res://Script/Managers/input_manager.gd" id="5_43tkh"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_876be"]
 atlas = ExtResource("3_udifs")
