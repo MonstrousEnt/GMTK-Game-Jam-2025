@@ -11,8 +11,19 @@ config_version=5
 [application]
 
 config/name="GMTK Game Jam 2025"
+run/main_scene="uid://drq1c50sf8x7f"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://assets/textures/icon.svg"
+
+[autoload]
+
+LevelManager="*res://scenes/singletons/level_manager.tscn"
+
+[layer_names]
+
+2d_physics/layer_1="player"
+2d_physics/layer_2="terrain"
+2d_physics/layer_3="hazards"
 
 [rendering]
 

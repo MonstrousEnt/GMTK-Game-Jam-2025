@@ -17,9 +17,10 @@ size = Vector2(32, 112)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xy1qu"]
 size = Vector2(112, 32)
 
-[node name="Level0" type="Node2D" node_paths=PackedStringArray("rooms")]
+[node name="Level0" type="Node2D" node_paths=PackedStringArray("rooms", "starting_room")]
 script = ExtResource("1_wjk5u")
 rooms = [NodePath("Room"), NodePath("Room2"), null]
+starting_room = NodePath("Room")
 
 [node name="Room" parent="." node_paths=PackedStringArray("room_connections") instance=ExtResource("2_wjk5u")]
 room_connections = [NodePath("Connections/RightConnection"), NodePath("Connections/TopConnection")]
