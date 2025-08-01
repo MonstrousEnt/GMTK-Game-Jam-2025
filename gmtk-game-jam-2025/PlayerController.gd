@@ -1,5 +1,5 @@
 extends CharacterBody2D
-@export var speed = 450
+@export var speed = 250
 @export var jumpForce = 450
 @export var gravity = 980
 @export var acceleration = 600
@@ -9,6 +9,9 @@ extends CharacterBody2D
 @export var jump_cut_gravity_multiplier = 2.0
 @export var air_acceleration = 600 # For air control
 @export var air_deceleration = 2400 # For air control
+
+@onready var player_anim_controller = $"AnimatedSprite2D"
+@onready var input_manager = $"InputManager"
 
 var camera_rotation_state = 0
 var coyote_timer = 0.0
@@ -23,25 +26,33 @@ func _physics_process(delta):
 		coyote_timer = coyote_time
 
 	# Cut the jump short if button is released and character is still rising.
-	if Input.is_action_just_released("ui_up") and velocity.y < 0:
+	if input_manager.is_action_just_released("jump") and velocity.y < 0:
 		velocity.y = velocity.y / jump_cut_gravity_multiplier
 
 	# --- HORIZONTAL MOVEMENT ---
 	var input_x = 0
-	match camera_rotation_state:
-		0: input_x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
-		1: input_x = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
-		2: input_x = Input.get_action_strength("ui_left") - Input.get_action_strength("ui_right")
-		3: input_x = Input.get_action_strength("ui_up") - Input.get_action_strength("ui_down")
+	# Check the logical actions defined in your InputManager
+	var move_left = input_manager.is_action_pressed("move_left")
+	var move_right = input_manager.is_action_pressed("move_right")
+	var move_up = input_manager.is_action_pressed("move_up")
+	var move_down = input_manager.is_action_pressed("move_down")
 	
+	match camera_rotation_state:
+		0: input_x = int(move_right) - int(move_left)
+		1: input_x = int(move_down) - int(move_up)
+		2: input_x = int(move_left) - int(move_right)
+		3: input_x = int(move_up) - int(move_down)
+		
 	var target_speed = input_x * speed
 	
 	# Accelerate and decelerate the character's velocity based on input direction.
 	if is_on_floor():
 		if input_x != 0:
 			velocity.x = move_toward(velocity.x, target_speed, acceleration * delta)
+			player_anim_controller.play("walk")
 		else:
 			velocity.x = move_toward(velocity.x, 0, deceleration * delta)
+			player_anim_controller.play("idle")
 	else: 
 		if input_x != 0:
 			velocity.x = move_toward(velocity.x, target_speed, air_acceleration * delta)
@@ -49,7 +60,7 @@ func _physics_process(delta):
 			velocity.x = move_toward(velocity.x, 0, air_deceleration * delta)
 
 	# --- JUMP BUFFER ---
-	if Input.is_action_just_pressed("ui_up"):
+	if Input.is_action_just_pressed("jump") and is_on_floor():
 		# If the jump was just pressed, buffer the command.
 		jump_buffer_timer = jump_buffer_time
 	else:
