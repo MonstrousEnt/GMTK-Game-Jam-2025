@@ -81,6 +81,7 @@ func jump(delta) -> void:
 	# we accept the jump. More forgiving that way.
 	if (coyote_timer > 0 or is_on_floor()) and jump_buffer_timer > 0:
 		velocity.y = -jumpForce
+		player_anim_controller.play("jump")
 		# Reset the timers to prevent double jumps.
 		coyote_timer = 0
 		jump_buffer_timer = 0
