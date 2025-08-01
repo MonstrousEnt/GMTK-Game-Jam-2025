@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://cd542djukiqjm"]
+
+[ext_resource type="PackedScene" uid="uid://sarpk1xpja4n" path="res://Perfabs/player.tscn" id="1_1ier6"]
+[ext_resource type="Script" uid="uid://bol5alcvx7qut" path="res://Levels/current_level_data.gd" id="1_r7c8o"]
+[ext_resource type="Texture2D" uid="uid://dx8om2ecwbj7c" path="res://icon.svg" id="2_r7c8o"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_n35fb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bpmdx"]
+size = Vector2(126.667, 118.634)
+
+[node name="DanielDebugLevel" type="Node2D"]
+
+[node name="CurrentLevelData" type="Node" parent="."]
+script = ExtResource("1_r7c8o")
+
+[node name="Player" parent="." instance=ExtResource("1_1ier6")]
+
+[node name="TestFloor" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="TestFloor"]
+position = Vector2(576, 628.5)
+scale = Vector2(9, 0.320313)
+texture = ExtResource("2_r7c8o")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="TestFloor/Sprite2D"]
+physics_material_override = SubResource("PhysicsMaterial_n35fb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestFloor/Sprite2D/StaticBody2D"]
+position = Vector2(0.33334, -4.68286)
+shape = SubResource("RectangleShape2D_bpmdx")
