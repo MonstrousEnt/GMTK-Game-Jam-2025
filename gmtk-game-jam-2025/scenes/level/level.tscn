@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c31k65yfbvwvg"]
 
-[ext_resource type="Script" uid="uid://dq1t7xwuevrym" path="res://scripts/level/level.gd" id="1_h3e3j"]
+[ext_resource type="Script" uid="uid://dq1t7xwuevrym" path="res://Script/level/level.gd" id="1_h3e3j"]
 
 [node name="Level" type="Node2D"]
 process_mode = 1

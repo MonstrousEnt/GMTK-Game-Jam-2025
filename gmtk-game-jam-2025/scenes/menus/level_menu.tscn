@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bmwgdgt6blwo7"]
 
-[ext_resource type="Script" uid="uid://duaas8lt3bhli" path="res://scripts/menus/level_menu.gd" id="1_3leng"]
+[ext_resource type="Script" uid="uid://duaas8lt3bhli" path="res://Script/menus/level_menu.gd" id="1_3leng"]
 [ext_resource type="PackedScene" uid="uid://dsx6yr6famjc" path="res://scenes/menus/level_button.tscn" id="2_6wyfp"]
 
 [node name="LevelMenu" type="Control"]

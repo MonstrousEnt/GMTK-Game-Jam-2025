@@ -11,9 +11,7 @@ config_version=5
 [application]
 
 config/name="GMTK Game Jam 2025"
-
 run/main_scene="uid://drq1c50sf8x7f"
-
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://assets/textures/icon.svg"
 
@@ -31,15 +29,6 @@ game_pause={
 , Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":6,"pressure":0.0,"pressed":false,"script":null)
 ]
 }
-
-[layer_names]
-
-2d_physics/layer_1="player"
-2d_physics/layer_2="terrain"
-2d_physics/layer_3="hazards"
-
-[input]
-
 move_left={
 "deadzone": 0.2,
 "events": []
@@ -53,6 +42,18 @@ jump={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":32,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
+game_toggle_map={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":88,"key_label":0,"unicode":120,"location":0,"echo":false,"script":null)
+, Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":3,"pressure":0.0,"pressed":false,"script":null)
+]
+}
+
+[layer_names]
+
+2d_physics/layer_1="player"
+2d_physics/layer_2="terrain"
+2d_physics/layer_3="hazards"
 
 [rendering]
 

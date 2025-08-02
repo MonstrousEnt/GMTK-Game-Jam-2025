@@ -4,6 +4,10 @@ extends Node2D
 ## A room in a level
 
 
+## emitted if room data is changed
+signal room_data_changed
+
+
 ## Whether this is the current active room in the level
 var active: bool = false
 
@@ -15,6 +19,12 @@ var active: bool = false
 		_set_childrens_room()
 		_disconnect_signals()
 		_connect_signals()
+
+
+@export var room_data: RoomData:
+	set(value):
+		room_data = value
+		room_data_changed.emit()
 
 
 ##

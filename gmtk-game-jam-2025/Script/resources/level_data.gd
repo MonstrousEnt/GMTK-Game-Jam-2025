@@ -1,3 +1,4 @@
+@tool
 class_name LevelData
 extends Resource
 
@@ -6,6 +7,8 @@ extends Resource
 signal level_unlocked_changed
 ## Emitted when value of level completed is changed
 signal level_completed_changed
+## Emitted when value room of room data is changed
+signal room_data_changed
 
 
 ## Path to level scene
@@ -24,3 +27,9 @@ signal level_completed_changed
 		if value != completed:
 			completed = value
 			level_completed_changed.emit()
+
+## Data for rooms in this level
+@export var room_data: Array[RoomData]:
+	set(value):
+		room_data = value
+		room_data_changed.emit()

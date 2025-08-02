@@ -1,16 +1,10 @@
 [gd_scene load_steps=4 format=3 uid="uid://cxgsmi5bwe0po"]
 
-[ext_resource type="Script" uid="uid://dkojdv7fxt0pi" path="res://scripts/singletons/game_manager.gd" id="1_bx5pk"]
-[ext_resource type="Script" uid="uid://bh0apdh8prcyk" path="res://scripts/resources/level_data.gd" id="2_nj68w"]
-
-[sub_resource type="Resource" id="Resource_p1l7q"]
-script = ExtResource("2_nj68w")
-level_scene_path = "uid://b0awhb1p4ka54"
-unlocked = true
-completed = false
-metadata/_custom_type_script = "uid://bh0apdh8prcyk"
+[ext_resource type="Script" uid="uid://dkojdv7fxt0pi" path="res://Script/singletons/game_manager.gd" id="1_bx5pk"]
+[ext_resource type="Script" uid="uid://bh0apdh8prcyk" path="res://Script/resources/level_data.gd" id="2_nj68w"]
+[ext_resource type="Resource" uid="uid://q6y0ni4oq71d" path="res://assets/resources/level_data/level_0/level_0.tres" id="3_p1l7q"]
 
 [node name="GameManager" type="Node"]
 process_mode = 3
 script = ExtResource("1_bx5pk")
-levels = Array[ExtResource("2_nj68w")]([SubResource("Resource_p1l7q")])
+levels = Array[ExtResource("2_nj68w")]([ExtResource("3_p1l7q")])
