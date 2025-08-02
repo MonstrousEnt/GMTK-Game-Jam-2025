@@ -4,6 +4,8 @@ extends Resource
 
 ## Emitted when value of level unlocked is changed
 signal level_unlocked_changed
+## Emitted when value of level completed is changed
+signal level_completed_changed
 
 
 ## Path to level scene
@@ -17,4 +19,8 @@ signal level_unlocked_changed
 			level_unlocked_changed.emit()
 
 ## Whether this level is completed
-@export var completed: bool = false
+@export var completed: bool = false:
+	set(value):
+		if value != completed:
+			completed = value
+			level_completed_changed.emit()

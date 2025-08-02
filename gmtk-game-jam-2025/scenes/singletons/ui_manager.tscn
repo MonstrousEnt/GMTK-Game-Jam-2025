@@ -1,0 +1,90 @@
+[gd_scene load_steps=5 format=3 uid="uid://brgj0st1nprdq"]
+
+[ext_resource type="Script" uid="uid://piyleg8iwqha" path="res://scripts/singletons/ui_manager.gd" id="1_8ogfv"]
+[ext_resource type="Script" uid="uid://bw4pxaunkjan1" path="res://scripts/state_machine/state_machine.gd" id="2_0li8b"]
+[ext_resource type="PackedScene" uid="uid://g5b0c632t2s1" path="res://scenes/menus/main_menu.tscn" id="3_hedv1"]
+[ext_resource type="PackedScene" uid="uid://bmwgdgt6blwo7" path="res://scenes/menus/level_menu.tscn" id="4_hedv1"]
+
+[node name="UIManager" type="Control"]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_8ogfv")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Menus" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("initial_state")]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_0li8b")
+initial_state = NodePath("Main Menu")
+
+[node name="MenuBackground" type="ColorRect" parent="CanvasLayer/Menus"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.298039, 0.298039, 0.298039, 1)
+
+[node name="Main Menu" parent="CanvasLayer/Menus" node_paths=PackedStringArray("level_menu") instance=ExtResource("3_hedv1")]
+layout_mode = 1
+level_menu = NodePath("../LevelMenu")
+
+[node name="LevelMenu" parent="CanvasLayer/Menus" node_paths=PackedStringArray("main_menu") instance=ExtResource("4_hedv1")]
+layout_mode = 1
+main_menu = NodePath("../Main Menu")
+
+[node name="LoadingScreen" type="Control" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/LoadingScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/LoadingScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/LoadingScreen/CenterContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer/LoadingScreen/CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 100)
+layout_mode = 2
+bbcode_enabled = true
+text = "[center][font_size=32][wave amp=50.0 freq=5.0 connected=1]Loading...[/wave][/font_size][/center]"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LoadingProgressBar" type="ProgressBar" parent="CanvasLayer/LoadingScreen/CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+rounded = true

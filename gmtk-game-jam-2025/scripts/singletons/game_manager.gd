@@ -2,6 +2,29 @@ class_name GameManagerSingleton
 extends Node
 
 
+## Emitted when loading value changed
+signal loading_changed
+## Emitted when loading progress value changed
+signal loading_progress_changed(progress: float)
+## Emitted when in level value changed
+signal in_level_changed
+
+
+## Whether the game is loading
+var loading: bool = false:
+	set(value):
+		if value != loading:
+			loading = value
+			loading_changed.emit()
+
+
+var in_level: bool = false:
+	set(value):
+		if value != in_level:
+			in_level = value
+			in_level_changed.emit()
+
+
 @export var levels: Array[LevelData]
 
 
@@ -13,8 +36,8 @@ extends Node
 func _ready() -> void:
 	_connect_signals()
 	# TEMP: Load first level on game ready
-	LevelManager.request_load_level("res://scenes/levels/level_0.tscn")
-	await LevelManager.level_loaded
+	# LevelManager.request_load_level("res://scenes/levels/level_0.tscn")
+	# await LevelManager.level_loaded
 
 
 func _exit_tree() -> void:
@@ -30,15 +53,17 @@ func _exit_tree() -> void:
 func play_level(level_data: LevelData) -> void:
 	# Return if level is not unlocked
 	if !level_data.unlocked:
+		print("Not unlocked")
 		return
 
 	# Return if level manager is already loading a level
 	if LevelManager.loading:
+		print("Already loading")
 		return
 
-	# TODO: Show loading screen UI
 
 	# Start loading level
+	loading = true
 	LevelManager.request_load_level(level_data.level_scene_path)
 
 
@@ -65,18 +90,26 @@ func unlock_next_level() -> void:
 func _connect_signals() -> void:
 	LevelManager.level_loaded.connect(_on_level_loaded)
 	LevelManager.level_load_failed.connect(_on_level_load_failed)
+	LevelManager.level_load_progress_changed.connect(_on_level_load_progress_changed)
 
 
 func _disconnect_signals() -> void:
 	LevelManager.level_loaded.disconnect(_on_level_loaded)
 	LevelManager.level_load_failed.disconnect(_on_level_load_failed)
+	LevelManager.level_load_progress_changed.disconnect(_on_level_load_progress_changed)
 
 
 func _on_level_loaded() -> void:
+	loading = false
+	in_level = true
 	LevelManager.start_level()
 
 
 func _on_level_load_failed() -> void:
 	print("Failed to load level")
+	loading = false
 
+
+func _on_level_load_progress_changed() -> void:
+	loading_progress_changed.emit(LevelManager.level_load_progress)
 

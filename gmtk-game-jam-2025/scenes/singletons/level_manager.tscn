@@ -3,4 +3,5 @@
 [ext_resource type="Script" uid="uid://kn17sibo8xvw" path="res://scripts/singletons/level_manager.gd" id="1_1tni7"]
 
 [node name="LevelManager" type="Node"]
+process_mode = 3
 script = ExtResource("1_1tni7")
