@@ -11,6 +11,7 @@ config_version=5
 [application]
 
 config/name="GMTK Game Jam 2025"
+run/main_scene="uid://bj46ihnf55nem"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -19,6 +20,22 @@ config/icon="res://icon.svg"
 2d_physics/layer_1="player"
 2d_physics/layer_2="terrain"
 2d_physics/layer_3="hazards"
+
+[input]
+
+move_left={
+"deadzone": 0.2,
+"events": []
+}
+move_right={
+"deadzone": 0.2,
+"events": []
+}
+jump={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":0,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":32,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
+]
+}
 
 [rendering]
 
