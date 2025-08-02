@@ -5,7 +5,8 @@ extends Control
 
 @onready var loading_screen: Control = %LoadingScreen
 @onready var loading_bar: ProgressBar = %LoadingProgressBar
-@onready var menus: Control = %Menus
+@onready var menus: StateMachine = %Menus
+@onready var pause_menus: StateMachine = %PauseMenus
 
 
 ##
@@ -16,7 +17,15 @@ extends Control
 func _ready() -> void:
 	_set_loading_screen_visibility()
 	_connect_signals()
+	update_pause_menus()
 
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("game_pause"):
+		if GameManager.in_level && get_tree().paused == false:
+			print("pause")
+			pause_game()
+			get_viewport().set_input_as_handled()
 
 func _exit_tree() -> void:
 	_disconnect_signals()
@@ -25,6 +34,27 @@ func _exit_tree() -> void:
 ##
 ## METHODS
 ##
+
+
+func pause_game() -> void:
+	if !GameManager.in_level:
+		return
+
+	if get_tree().paused:
+		return
+
+	get_tree().paused = true
+	pause_menus.change_state(pause_menus.initial_state)
+	update_pause_menus()
+
+
+func unpause_game() -> void:
+	get_tree().paused = false
+	update_pause_menus()
+
+
+func update_pause_menus() -> void:
+	pause_menus.visible = GameManager.in_level && get_tree().paused
 
 
 func _connect_signals() -> void:
