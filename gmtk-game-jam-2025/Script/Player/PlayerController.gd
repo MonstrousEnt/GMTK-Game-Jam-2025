@@ -35,6 +35,7 @@ func _physics_process(delta) -> void:
 	if not is_sprung:
 		# If the spring is finished, the player can move.
 		move_player(delta)
+		
 	move_and_slide()
 
 func apply_gravity(delta) -> void:

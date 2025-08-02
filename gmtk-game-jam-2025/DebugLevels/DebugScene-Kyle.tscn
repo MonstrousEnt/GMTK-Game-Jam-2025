@@ -1,13 +1,13 @@
 [gd_scene load_steps=18 format=3 uid="uid://bj46ihnf55nem"]
 
-[ext_resource type="Script" uid="uid://vrp1dukmiq17" path="res://script/PlayerController.gd" id="1_2be4l"]
+[ext_resource type="Script" uid="uid://vrp1dukmiq17" path="res://Script/Player/PlayerController.gd" id="1_2be4l"]
 [ext_resource type="Texture2D" uid="uid://dx8om2ecwbj7c" path="res://icon.svg" id="2_3mwrl"]
-[ext_resource type="Texture2D" uid="uid://bi73bgfo5lj6y" path="res://sprites/placeholder_idle.png" id="3_g0g1r"]
-[ext_resource type="Script" uid="uid://c77oddhm0ylxd" path="res://script/PlayerAnimController.gd" id="3_y00gc"]
-[ext_resource type="Texture2D" uid="uid://dishd4vr77cgq" path="res://sprites/placeholder_alien.png" id="4_3pjhv"]
-[ext_resource type="Script" uid="uid://dnjw665d0a14v" path="res://script/input_manager.gd" id="5_3pjhv"]
-[ext_resource type="Script" uid="uid://bguyxunwjsg3q" path="res://spring_controller.gd" id="7_dkv6e"]
-[ext_resource type="Texture2D" uid="uid://cctfi6camdrbj" path="res://sprites/spring_placeholder.png" id="8_nr7cw"]
+[ext_resource type="Texture2D" uid="uid://bi73bgfo5lj6y" path="res://Sprites/Placeholder/placeholder_idle.png" id="3_g0g1r"]
+[ext_resource type="Script" uid="uid://c77oddhm0ylxd" path="res://Script/Player/PlayerAnimController.gd" id="3_y00gc"]
+[ext_resource type="Texture2D" uid="uid://dishd4vr77cgq" path="res://Sprites/Placeholder/placeholder_alien.png" id="4_3pjhv"]
+[ext_resource type="Script" uid="uid://dnjw665d0a14v" path="res://Script/Managers/input_manager.gd" id="5_3pjhv"]
+[ext_resource type="Script" uid="uid://bguyxunwjsg3q" path="res://Script/Obstacles/spring_controller.gd" id="7_dkv6e"]
+[ext_resource type="Texture2D" uid="uid://cctfi6camdrbj" path="res://Sprites/Placeholder/spring_placeholder.png" id="8_nr7cw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_876be"]
 atlas = ExtResource("4_3pjhv")
