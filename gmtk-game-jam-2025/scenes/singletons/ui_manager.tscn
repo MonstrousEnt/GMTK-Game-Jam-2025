@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://brgj0st1nprdq"]
+[gd_scene load_steps=6 format=3 uid="uid://brgj0st1nprdq"]
 
 [ext_resource type="Script" uid="uid://piyleg8iwqha" path="res://scripts/singletons/ui_manager.gd" id="1_8ogfv"]
 [ext_resource type="Script" uid="uid://bw4pxaunkjan1" path="res://scripts/state_machine/state_machine.gd" id="2_0li8b"]
 [ext_resource type="PackedScene" uid="uid://g5b0c632t2s1" path="res://scenes/menus/main_menu.tscn" id="3_hedv1"]
 [ext_resource type="PackedScene" uid="uid://bmwgdgt6blwo7" path="res://scenes/menus/level_menu.tscn" id="4_hedv1"]
+[ext_resource type="PackedScene" uid="uid://dmx7u2g6lnvc" path="res://scenes/menus/options_menu.tscn" id="5_p017q"]
 
 [node name="UIManager" type="Control"]
 process_mode = 3
@@ -37,13 +38,18 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.298039, 0.298039, 0.298039, 1)
 
-[node name="Main Menu" parent="CanvasLayer/Menus" node_paths=PackedStringArray("level_menu") instance=ExtResource("3_hedv1")]
+[node name="Main Menu" parent="CanvasLayer/Menus" node_paths=PackedStringArray("level_menu", "options_menu") instance=ExtResource("3_hedv1")]
 layout_mode = 1
 level_menu = NodePath("../LevelMenu")
+options_menu = NodePath("../OptionsMenu")
 
 [node name="LevelMenu" parent="CanvasLayer/Menus" node_paths=PackedStringArray("main_menu") instance=ExtResource("4_hedv1")]
 layout_mode = 1
 main_menu = NodePath("../Main Menu")
+
+[node name="OptionsMenu" parent="CanvasLayer/Menus" node_paths=PackedStringArray("back_menu") instance=ExtResource("5_p017q")]
+layout_mode = 1
+back_menu = NodePath("../Main Menu")
 
 [node name="LoadingScreen" type="Control" parent="CanvasLayer"]
 unique_name_in_owner = true

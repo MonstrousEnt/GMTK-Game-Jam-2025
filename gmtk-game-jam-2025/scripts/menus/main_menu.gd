@@ -3,9 +3,11 @@ extends MenuState
 
 
 @export var level_menu: MenuState
+@export var options_menu: MenuState
 
 
 @onready var play_button: Button = %PlayButton
+@onready var options_button: Button = %OptionsButton
 @onready var quit_button: Button = %QuitButton
 
 
@@ -30,16 +32,22 @@ func _exit_tree() -> void:
 
 func _connect_signals() -> void:
 	play_button.pressed.connect(_on_play_pressed)
+	options_button.pressed.connect(_on_options_pressed)
 	quit_button.pressed.connect(_on_quit_pressed)
 
 
 func _disconnect_signals() -> void:
 	play_button.pressed.disconnect(_on_play_pressed)
+	options_button.pressed.disconnect(_on_options_pressed)
 	quit_button.pressed.disconnect(_on_quit_pressed)
 
 
 func _on_play_pressed() -> void:
 	Transitioned.emit(self, level_menu)
+
+
+func _on_options_pressed() -> void:
+	Transitioned.emit(self, options_menu)
 
 
 func _on_quit_pressed() -> void:

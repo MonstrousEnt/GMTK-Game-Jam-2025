@@ -47,6 +47,15 @@ func request_load_level(path: String) -> void:
 	ResourceLoader.load_threaded_request(path)
 
 
+## Unload the current level
+func unload_level() -> void:
+	if current_level == null:
+		return
+
+	current_level.free()
+	current_level_path = ""
+
+
 ## Start level gameplay
 func start_level() -> void:
 	print("TODO: start level logic")

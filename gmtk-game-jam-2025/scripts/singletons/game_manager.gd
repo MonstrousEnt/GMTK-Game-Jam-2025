@@ -67,6 +67,15 @@ func play_level(level_data: LevelData) -> void:
 	LevelManager.request_load_level(level_data.level_scene_path)
 
 
+## Quit and unload a level
+func quit_level() -> void:
+	if !in_level:
+		return
+
+	in_level = false
+	LevelManager.unload_level()
+
+
 ## Unlock the next level in the game if there is one
 func unlock_next_level() -> void:
 	# Return if no current level
@@ -102,6 +111,7 @@ func _disconnect_signals() -> void:
 func _on_level_loaded() -> void:
 	loading = false
 	in_level = true
+	get_tree().paused = false
 	LevelManager.start_level()
 
 
