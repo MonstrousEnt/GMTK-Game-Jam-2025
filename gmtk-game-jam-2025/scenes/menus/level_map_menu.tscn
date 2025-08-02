@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://btsqgp050vh2o"]
+[gd_scene load_steps=3 format=3 uid="uid://btsqgp050vh2o"]
 
 [ext_resource type="PackedScene" uid="uid://bhe85q52hqmlr" path="res://scenes/level/level_map.tscn" id="1_ag8h7"]
 [ext_resource type="Script" uid="uid://brngddt45lsy5" path="res://Script/menus/level_map_menu.gd" id="1_drduy"]
-[ext_resource type="Resource" uid="uid://q6y0ni4oq71d" path="res://assets/resources/level_data/level_0/level_0.tres" id="2_drduy"]
 
 [node name="LevelMapMenu" type="Control"]
 layout_mode = 3
@@ -12,6 +11,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_drduy")
+
+[node name="MapBackground" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.132207, 0.143508, 0.185619, 1)
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -24,13 +32,6 @@ theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 16
 theme_override_constants/margin_bottom = 16
-
-[node name="ExitButton" type="Button" parent="MarginContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-size_flags_horizontal = 0
-size_flags_vertical = 0
-text = "< Exit"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
@@ -57,7 +58,6 @@ render_target_update_mode = 4
 
 [node name="LevelMap" parent="MarginContainer/VBoxContainer/SubViewportContainer/SubViewport" instance=ExtResource("1_ag8h7")]
 unique_name_in_owner = true
-level_data = ExtResource("2_drduy")
 
 [node name="CameraPivot" type="Node3D" parent="MarginContainer/VBoxContainer/SubViewportContainer/SubViewport"]
 unique_name_in_owner = true
@@ -67,10 +67,19 @@ transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
 projection = 1
-size = 2.0
+size = 2.73205
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="MarginContainer/VBoxContainer/SubViewportContainer/SubViewport/CameraPivot/Camera3D"]
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
 bbcode_enabled = true
 text = "[i]Left Mouse: Pan  [/i]|[i]  Right Stick: Pan[/i]"
 fit_content = true
+
+[node name="ExitButton" type="Button" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "< Exit"

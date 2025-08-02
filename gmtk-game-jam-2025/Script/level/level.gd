@@ -38,8 +38,17 @@ func _exit_tree() -> void:
 
 ## Update list of room data in level data
 func update_level_data_room_data() -> void:
-	var room_data: Array = rooms.map(func(room: Room): return room.room_data)
-	level_data.room_data = room_data.filter(func(data): return data is RoomData)
+	if level_data.room_data == null:
+		level_data.room_data = []
+
+	for room in rooms:
+		if room.room_data == null:
+			continue
+
+		if level_data.room_data.has(room.room_data):
+			continue
+
+		level_data.room_data.append(room.room_data)
 
 
 ## Connect to all room data signals

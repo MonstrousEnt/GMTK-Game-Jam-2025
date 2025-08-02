@@ -35,9 +35,6 @@ var in_level: bool = false:
 
 func _ready() -> void:
 	_connect_signals()
-	# TEMP: Load first level on game ready
-	# LevelManager.request_load_level("res://scenes/levels/level_0.tscn")
-	# await LevelManager.level_loaded
 
 
 func _exit_tree() -> void:
@@ -113,6 +110,7 @@ func _on_level_loaded() -> void:
 	loading = false
 	in_level = true
 	get_tree().paused = false
+	UIManager.set_level_map_to_current()
 	LevelManager.start_level()
 
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://brgj0st1nprdq"]
+[gd_scene load_steps=9 format=3 uid="uid://brgj0st1nprdq"]
 
 [ext_resource type="Script" uid="uid://piyleg8iwqha" path="res://Script/singletons/ui_manager.gd" id="1_8ogfv"]
 [ext_resource type="Script" uid="uid://bw4pxaunkjan1" path="res://Script/state_machine/state_machine.gd" id="2_0li8b"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dmx7u2g6lnvc" path="res://scenes/menus/options_menu.tscn" id="5_p017q"]
 [ext_resource type="PackedScene" uid="uid://bl8d1ibrjuwfu" path="res://scenes/menus/credits_menu.tscn" id="6_iwu16"]
 [ext_resource type="PackedScene" uid="uid://deo0t4m1xst7u" path="res://scenes/menus/pause_menu.tscn" id="6_n117r"]
+[ext_resource type="PackedScene" uid="uid://btsqgp050vh2o" path="res://scenes/menus/level_map_menu.tscn" id="8_pvkdg"]
 
 [node name="UIManager" type="Control"]
 process_mode = 3
@@ -90,6 +91,10 @@ options_menu = NodePath("../OptionsMenu")
 [node name="OptionsMenu" parent="CanvasLayer/PauseMenus" node_paths=PackedStringArray("back_menu") instance=ExtResource("5_p017q")]
 layout_mode = 1
 back_menu = NodePath("../PauseMenu")
+
+[node name="LevelMapMenu" parent="CanvasLayer" instance=ExtResource("8_pvkdg")]
+unique_name_in_owner = true
+process_mode = 2
 
 [node name="LoadingScreen" type="Control" parent="CanvasLayer"]
 unique_name_in_owner = true
