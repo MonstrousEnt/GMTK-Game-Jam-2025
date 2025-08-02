@@ -108,6 +108,7 @@ func _disconnect_signals() -> void:
 	LevelManager.level_load_progress_changed.disconnect(_on_level_load_progress_changed)
 
 
+## Handle level loaded signal
 func _on_level_loaded() -> void:
 	loading = false
 	in_level = true
@@ -115,11 +116,13 @@ func _on_level_loaded() -> void:
 	LevelManager.start_level()
 
 
+## Handle level load failed signal
 func _on_level_load_failed() -> void:
 	print("Failed to load level")
 	loading = false
 
 
+## Handle level load progress changed signal
 func _on_level_load_progress_changed() -> void:
 	loading_progress_changed.emit(LevelManager.level_load_progress)
 

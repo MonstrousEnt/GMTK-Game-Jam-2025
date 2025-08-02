@@ -1,5 +1,6 @@
 class_name StateMachine
 extends Node
+# A generic state machine for handling states
 
 
 signal state_changed
@@ -76,6 +77,7 @@ func _init_child_states() -> Dictionary[String, State]:
 	return child_states
 
 
+## Handle transition between states
 func _on_child_transition(state: State, new_state: State):
 	if state != current_state:
 		return

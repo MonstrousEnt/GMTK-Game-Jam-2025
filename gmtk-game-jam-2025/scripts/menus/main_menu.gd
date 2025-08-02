@@ -42,13 +42,16 @@ func _disconnect_signals() -> void:
 	quit_button.pressed.disconnect(_on_quit_pressed)
 
 
+## Handle play button pressed
 func _on_play_pressed() -> void:
 	Transitioned.emit(self, level_menu)
 
 
+## Handle options button pressed
 func _on_options_pressed() -> void:
 	Transitioned.emit(self, options_menu)
 
 
+## Handle quit button pressed
 func _on_quit_pressed() -> void:
 	get_tree().quit()

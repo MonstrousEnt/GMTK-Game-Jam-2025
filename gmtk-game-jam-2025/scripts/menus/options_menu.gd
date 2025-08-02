@@ -45,17 +45,24 @@ func _disconnect_signals() -> void:
 	sound_slider.value_changed.disconnect(_on_sound_changed)
 
 
+## Handle back button pressed
 func _on_back_pressed() -> void:
 	Transitioned.emit(self, back_menu)
 
 
-func _on_master_changed() -> void:
+## Handle master volume slider changed
+func _on_master_changed(_value: float) -> void:
+	# TODO: update master volume setting
 	pass
 
 
-func _on_music_changed() -> void:
+## Handle music volume slider changed
+func _on_music_changed(_value: float) -> void:
+	# TODO: update music volume setting
 	pass
 
 
-func _on_sound_changed() -> void:
+## Handle sound effect volume slider changed
+func _on_sound_changed(_value: float) -> void:
+	# TODO: update sound effect volume setting
 	pass

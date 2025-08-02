@@ -70,10 +70,12 @@ func _disconnect_signals() -> void:
 			button.level_pressed.disconnect(_on_level_pressed)
 
 
+## Handle main menu button pressed
 func _on_main_menu_pressed() -> void:
 	Transitioned.emit(self, main_menu)
 
 
+## Handle level button pressed
 func _on_level_pressed(level_data: LevelData):
 	GameManager.play_level(level_data)
 

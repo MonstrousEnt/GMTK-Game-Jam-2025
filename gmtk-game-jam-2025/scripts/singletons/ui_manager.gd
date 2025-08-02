@@ -36,6 +36,7 @@ func _exit_tree() -> void:
 ##
 
 
+## Pause the game and show the pause menu
 func pause_game() -> void:
 	if !GameManager.in_level:
 		return
@@ -48,11 +49,13 @@ func pause_game() -> void:
 	update_pause_menus()
 
 
+## Unpause the game and hide the pause menu
 func unpause_game() -> void:
 	get_tree().paused = false
 	update_pause_menus()
 
 
+## Update visibility of the pause menu
 func update_pause_menus() -> void:
 	pause_menus.visible = GameManager.in_level && get_tree().paused
 
@@ -68,17 +71,21 @@ func _disconnect_signals() -> void:
 	GameManager.in_level_changed.disconnect(_on_in_level_changed)
 
 
+## Handle loading state changed
 func _on_loading_changed() -> void:
 	_set_loading_screen_visibility()
 
 
+## Handle loading progress changed
 func _on_loading_progress_changed(progress: float) -> void:
 	loading_bar.value = progress * 100
 
 
+## Set the visibility of the loading screen based on loading state
 func _set_loading_screen_visibility() -> void:
 	loading_screen.visible = GameManager.loading
 
 
+## Handle in level state changed
 func _on_in_level_changed() -> void:
 	menus.visible = !GameManager.in_level

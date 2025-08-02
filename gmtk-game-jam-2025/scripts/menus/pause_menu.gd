@@ -50,14 +50,17 @@ func _disconnect_signals() -> void:
 	quit_level_button.pressed.disconnect(_on_quit_pressed)
 
 
+## Handle resume button pressed
 func _on_resume_pressed() -> void:
 	UIManager.unpause_game()
 
 
+## Handle options button pressed
 func _on_options_pressed() -> void:
 	Transitioned.emit(self, options_menu)
 
 
+## Handle quit level button pressed
 func _on_quit_pressed() -> void:
 	GameManager.quit_level()
 	UIManager.update_pause_menus()

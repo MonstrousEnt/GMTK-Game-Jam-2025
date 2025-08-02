@@ -75,10 +75,12 @@ func _disconnect_signals() -> void:
 	_disconnect_level_data_signals()
 
 
+## Handle button pressed
 func _on_pressed() -> void:
 	level_pressed.emit(level_data)
 
 
+## Connect level data resource signals
 func _connect_level_data_signals() -> void:
 	if level_data == null:
 		return
@@ -90,6 +92,7 @@ func _connect_level_data_signals() -> void:
 		level_data.level_completed_changed.connect(_on_level_completed_changed)
 
 
+## Disconnect level data resource signals
 func _disconnect_level_data_signals() -> void:
 	if level_data == null:
 		return
@@ -101,9 +104,11 @@ func _disconnect_level_data_signals() -> void:
 		level_data.level_completed_changed.disconnect(_on_level_completed_changed)
 
 
+## Handle level unlocked value changed
 func _on_level_unlocked_changed() -> void:
 	update_button()
 
 
+## Handle level completed value changed
 func _on_level_completed_changed() -> void:
 	update_button()
