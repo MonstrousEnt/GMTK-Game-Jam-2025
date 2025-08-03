@@ -1,3 +1,4 @@
+class_name AnimationController
 extends AnimatedSprite2D
 
 # Play's an animation based on it's name and prevents the animation

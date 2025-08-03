@@ -3,6 +3,7 @@ class_name Level
 extends Node2D
 ## A game level
 
+
 ## Data for this level
 @export var level_data: LevelData
 
@@ -15,6 +16,13 @@ extends Node2D
 
 ## Room that the level starts with
 @export var starting_room: Room
+
+## Spawn point that the level starts with (Must be in starting room)
+@export var starting_spawn_point: SpawnPoint
+
+
+## Room the player is currently in
+var current_room: Room
 
 
 ##

@@ -10,6 +10,10 @@ signal level_load_failed
 ## Emitted when a level is loaded
 signal level_loaded
 
+
+## Player character
+@export var player: Player
+
 ## Whether a level is loading
 var loading: bool = false
 
@@ -58,7 +62,61 @@ func unload_level() -> void:
 
 ## Start level gameplay
 func start_level() -> void:
-	print("TODO: start level logic")
+	if current_level == null:
+		return
+
+	# Set current room to level starting room
+	current_level.current_room = current_level.starting_room
+
+	# Move player to starting spawn point
+	player.global_position = current_level.starting_spawn_point.global_position
+
+	# Update player camera
+	update_player_camera_limits()
+	player.player_camera.reset_smoothing()
+	player.player_camera.make_current()
+
+	# Make player active
+	player.is_active = true
+
+
+## Update the player cameras limits to be inside the current room
+func update_player_camera_limits() -> void:
+	if current_level == null || current_level.current_room == null || current_level.current_room.tilemap == null:
+		player.player_camera.limit_top = -10000000
+		player.player_camera.limit_left = -10000000
+		player.player_camera.limit_bottom = 10000000
+		player.player_camera.limit_right = 10000000
+
+		return
+
+	var tile_size = current_level.current_room.tilemap.tile_set.tile_size
+	var room_rect = current_level.current_room.tilemap.get_used_rect()
+	var room_offset = current_level.current_room.global_position
+
+	player.player_camera.limit_top = room_rect.position.y * tile_size.y + room_offset.y
+	player.player_camera.limit_left = room_rect.position.x * tile_size.x + room_offset.x
+	player.player_camera.limit_bottom = room_rect.end.y * tile_size.y + room_offset.y
+	player.player_camera.limit_right = room_rect.end.x * tile_size.x + room_offset.x
+
+	var viewport_rect := get_viewport().get_visible_rect()
+
+	if room_rect.size.x * tile_size.x < viewport_rect.size.x:
+		var size_diff := viewport_rect.size.x - float(room_rect.size.x * tile_size.x)
+		print(size_diff)
+
+		player.player_camera.limit_left -= int(ceil(size_diff / 2))
+		player.player_camera.limit_right += int(ceil(size_diff / 2))
+
+	if room_rect.size.y * tile_size.y < viewport_rect.size.y:
+		var size_diff := viewport_rect.size.y - float(room_rect.size.y * tile_size.y)
+		print(size_diff)
+
+		player.player_camera.limit_top -= int(ceil(size_diff / 2))
+		player.player_camera.limit_bottom += int(ceil(size_diff / 2))
+
+
+
 
 
 ## Update the status of level loading

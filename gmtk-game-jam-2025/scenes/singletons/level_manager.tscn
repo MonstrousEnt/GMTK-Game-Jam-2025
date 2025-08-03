@@ -1,7 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://bd6lcyuvmpw3d"]
+[gd_scene load_steps=3 format=3 uid="uid://bd6lcyuvmpw3d"]
 
 [ext_resource type="Script" uid="uid://kn17sibo8xvw" path="res://Script/singletons/level_manager.gd" id="1_1tni7"]
+[ext_resource type="PackedScene" uid="uid://xy4iq88w5vq3" path="res://prefabs/player.tscn" id="2_gbanb"]
 
-[node name="LevelManager" type="Node"]
+[node name="LevelManager" type="Node" node_paths=PackedStringArray("player")]
 process_mode = 3
 script = ExtResource("1_1tni7")
+player = NodePath("Player")
+
+[node name="Player" parent="." instance=ExtResource("2_gbanb")]
+process_mode = 1

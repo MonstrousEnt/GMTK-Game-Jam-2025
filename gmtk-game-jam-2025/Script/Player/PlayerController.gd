@@ -1,6 +1,7 @@
 class_name Player
 extends CharacterBody2D
 
+
 # Variables to tweak in editor
 @export var speed: float = 350
 @export var jumpForce: float = 450
@@ -13,8 +14,18 @@ extends CharacterBody2D
 @export var air_acceleration: float = 600 # For air control
 @export var air_deceleration: float = 1200 # For air control
 
+
+@export var is_active: bool = false:
+	set(value):
+		is_active = value
+		if is_active && player_camera != null:
+			player_camera.make_current()
+
+
 # References
-@onready var player_anim_controller = %Sprite
+@onready var player_camera: Camera2D = %Camera
+@onready var player_anim_controller: AnimationController = %Sprite
+
 
 var coyote_timer: float = 0.0
 var jump_buffer_timer: float = 0.0
@@ -22,7 +33,16 @@ var jump_buffer_timer: float = 0.0
 var is_sprung: bool = false
 var spring_timer: float = 0.0
 
+
+func _ready() -> void:
+	if is_active:
+		player_camera.make_current()
+
+
 func _physics_process(delta) -> void:
+	if !is_active:
+		return
+
 	apply_gravity(delta)
 	jump(delta)
 	
@@ -37,6 +57,7 @@ func _physics_process(delta) -> void:
 		
 	move_and_slide()
 
+
 func apply_gravity(delta) -> void:
 	# --- GRAVITY AND TIMERS ---
 	if not is_on_floor():
@@ -45,6 +66,7 @@ func apply_gravity(delta) -> void:
 		coyote_timer -= delta
 	else:
 		coyote_timer = coyote_time
+
 
 func move_player(delta) -> void:
 	# --- HORIZONTAL MOVEMENT ---
@@ -65,6 +87,7 @@ func move_player(delta) -> void:
 			velocity.x = move_toward(velocity.x, target_speed, air_acceleration * delta)
 		else:
 			velocity.x = move_toward(velocity.x, 0, air_deceleration * delta)
+
 
 func jump(delta) -> void:
 		# Cut the jump short if button is released and character is still rising.

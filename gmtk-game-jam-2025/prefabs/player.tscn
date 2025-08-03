@@ -2,13 +2,19 @@
 
 [ext_resource type="Script" uid="uid://vrp1dukmiq17" path="res://Script/Player/PlayerController.gd" id="1_617v1"]
 [ext_resource type="SpriteFrames" uid="uid://qskoxj8pi025" path="res://assets/resources/player_sprite_frames.tres" id="2_1txc5"]
-[ext_resource type="Script" path="res://Script/Player/PlayerAnimController.gd" id="4_rpba7"]
+[ext_resource type="Script" uid="uid://c77oddhm0ylxd" path="res://Script/Player/PlayerAnimController.gd" id="4_rpba7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y00gc"]
 size = Vector2(12, 40)
 
 [node name="Player" type="CharacterBody2D"]
+collision_mask = 6
 script = ExtResource("1_617v1")
+
+[node name="Camera" type="Camera2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(1, 0)
+limit_smoothed = true
 
 [node name="Sprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true

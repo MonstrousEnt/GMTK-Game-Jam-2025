@@ -21,6 +21,9 @@ var active: bool = false
 		_connect_signals()
 
 
+@export var room_spawn_points: Array[SpawnPoint]
+
+
 @export var tilemap: TileMapLayer:
 	set(value):
 		tilemap = value

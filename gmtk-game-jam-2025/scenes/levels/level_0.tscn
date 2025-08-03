@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=4 uid="uid://b0awhb1p4ka54"]
+[gd_scene load_steps=17 format=4 uid="uid://b0awhb1p4ka54"]
 
 [ext_resource type="Script" uid="uid://dq1t7xwuevrym" path="res://Script/level/level.gd" id="1_wjk5u"]
 [ext_resource type="PackedScene" uid="uid://kai87dkpnytu" path="res://scenes/level/room/room.tscn" id="2_wjk5u"]
@@ -7,6 +7,7 @@
 [ext_resource type="Resource" uid="uid://dkqeg77csdilx" path="res://assets/resources/level_data/level_0/room_0.tres" id="4_6ayib"]
 [ext_resource type="PackedScene" uid="uid://ep3agw3ucl7a" path="res://scenes/level/room/room_connection.tscn" id="4_jjvta"]
 [ext_resource type="Resource" uid="uid://dvkjjgqs5o1lg" path="res://assets/resources/level_data/level_0/room_1.tres" id="7_65guy"]
+[ext_resource type="PackedScene" uid="uid://cgmg28nt7eslv" path="res://scenes/level/room/spawn_point.tscn" id="7_p6rmu"]
 [ext_resource type="Resource" uid="uid://dga0a2r7j22d" path="res://assets/resources/level_data/level_0/room_2.tres" id="8_p6rmu"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_6ayib"]
@@ -30,13 +31,12 @@ size = Vector2(112, 32)
 [sub_resource type="ViewportTexture" id="ViewportTexture_p6rmu"]
 viewport_path = NodePath("SubViewport")
 
-[node name="Level0" type="Node2D" node_paths=PackedStringArray("rooms", "starting_room")]
+[node name="Level0" type="Node2D" node_paths=PackedStringArray("rooms", "starting_room", "starting_spawn_point")]
 script = ExtResource("1_wjk5u")
 level_data = ExtResource("2_xy1qu")
 rooms = [NodePath("Room"), NodePath("Room2"), NodePath("Room3")]
 starting_room = NodePath("Room")
-
-[node name="Camera2D" type="Camera2D" parent="."]
+starting_spawn_point = NodePath("Room/SpawnPoints/SpawnPoint")
 
 [node name="Room" parent="." node_paths=PackedStringArray("room_connections", "tilemap") instance=ExtResource("2_wjk5u")]
 room_connections = [NodePath("Connections/RightConnection"), NodePath("Connections/TopConnection")]
@@ -68,6 +68,11 @@ player_entrance_offset = Vector2(0, 32)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Room/Connections/TopConnection"]
 shape = SubResource("RectangleShape2D_6ayib")
+
+[node name="SpawnPoints" type="Node2D" parent="Room"]
+
+[node name="SpawnPoint" parent="Room/SpawnPoints" instance=ExtResource("7_p6rmu")]
+position = Vector2(248, 248)
 
 [node name="Room2" parent="." node_paths=PackedStringArray("room_connections", "tilemap") instance=ExtResource("2_wjk5u")]
 position = Vector2(1019, 0)
