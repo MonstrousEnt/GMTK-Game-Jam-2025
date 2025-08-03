@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://bj46ihnf55nem"]
+[gd_scene load_steps=24 format=3 uid="uid://bj46ihnf55nem"]
 
 [ext_resource type="Script" uid="uid://vrp1dukmiq17" path="res://Script/Player/PlayerController.gd" id="1_2be4l"]
 [ext_resource type="Texture2D" uid="uid://dx8om2ecwbj7c" path="res://icon.svg" id="2_3mwrl"]
@@ -6,15 +6,12 @@
 [ext_resource type="Script" uid="uid://c77oddhm0ylxd" path="res://Script/Player/PlayerAnimController.gd" id="3_y00gc"]
 [ext_resource type="Texture2D" uid="uid://dishd4vr77cgq" path="res://Sprites/Placeholder/placeholder_alien.png" id="4_3pjhv"]
 [ext_resource type="Script" uid="uid://dnjw665d0a14v" path="res://Script/Managers/input_manager.gd" id="5_3pjhv"]
-[ext_resource type="Script" uid="uid://bguyxunwjsg3q" path="res://Script/Obstacles/spring_controller.gd" id="7_dkv6e"]
+[ext_resource type="Script" uid="uid://bguyxunwjsg3q" path="res://Script/Objects/spring_controller.gd" id="7_dkv6e"]
 [ext_resource type="Texture2D" uid="uid://cctfi6camdrbj" path="res://Sprites/Placeholder/spring_placeholder.png" id="8_nr7cw"]
-[ext_resource type="Script" uid="uid://bwhh8x868cvqj" path="res://Script/pickup.gd" id="9_12i0b"]
-[ext_resource type="Script" uid="uid://csikubwu6837n" path="res://key.gd" id="10_yymet"]
-[ext_resource type="Texture2D" uid="uid://dgsbgvwcy7dtk" path="res://Sprites/Placeholder/key_placeholder.png" id="11_ffy13"]
-[ext_resource type="Script" uid="uid://djuopivdrab4u" path="res://Script/key_door.gd" id="11_yymet"]
-[ext_resource type="Script" uid="uid://d106vmkqjw0gd" path="res://code_door.gd" id="13_fv6mm"]
-[ext_resource type="Script" uid="uid://ufxwhd47ytup" path="res://passcode.gd" id="14_cd1ue"]
-[ext_resource type="Texture2D" uid="uid://bd72vw4q8ttec" path="res://Sprites/Placeholder/passcode_placeholder.png" id="15_onbre"]
+[ext_resource type="PackedScene" uid="uid://ca05xg7hs0n7" path="res://Prefabs/key.tscn" id="9_yymet"]
+[ext_resource type="PackedScene" uid="uid://bd6aku4fiptv0" path="res://Prefabs/key_door.tscn" id="10_f837q"]
+[ext_resource type="PackedScene" uid="uid://dg8bmyb83f5j3" path="res://Prefabs/code_door.tscn" id="11_dviqd"]
+[ext_resource type="PackedScene" uid="uid://dgwcl5odvkmeb" path="res://Prefabs/passcode.tscn" id="12_fv6mm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_876be"]
 atlas = ExtResource("4_3pjhv")
@@ -98,32 +95,6 @@ size = Vector2(126.667, 118.634)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dkv6e"]
 size = Vector2(66, 27)
 
-[sub_resource type="Resource" id="Resource_yymet"]
-script = ExtResource("10_yymet")
-door_number = 0
-item_name = "key"
-item_id = 0
-metadata/_custom_type_script = "uid://csikubwu6837n"
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_yymet"]
-size = Vector2(27, 55)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_f837q"]
-size = Vector2(41.9999, 96)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_56e7b"]
-size = Vector2(127.273, 128.571)
-
-[sub_resource type="Resource" id="Resource_usqk8"]
-script = ExtResource("14_cd1ue")
-passcode = 1234
-item_name = "passcode"
-item_id = 1
-metadata/_custom_type_script = "uid://ufxwhd47ytup"
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_fv6mm"]
-size = Vector2(26, 31)
-
 [node name="MainScene" type="Node"]
 
 [node name="Player" type="CharacterBody2D" parent="."]
@@ -201,64 +172,18 @@ texture = ExtResource("8_nr7cw")
 position = Vector2(0, -13.5)
 shape = SubResource("RectangleShape2D_dkv6e")
 
-[node name="Key" type="Area2D" parent="." groups=["pickup"]]
+[node name="Key" parent="." instance=ExtResource("9_yymet")]
 position = Vector2(339, 561)
-script = ExtResource("9_12i0b")
-item_data_resource = SubResource("Resource_yymet")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Key"]
-position = Vector2(22.5, 17.5)
-shape = SubResource("RectangleShape2D_yymet")
-
-[node name="Sprite2D" type="Sprite2D" parent="Key"]
-position = Vector2(22, 22.5)
-scale = Vector2(2.375, 2.25)
-texture = ExtResource("11_ffy13")
-
-[node name="KeyDoor" type="Area2D" parent="."]
+[node name="KeyDoor" parent="." instance=ExtResource("10_f837q")]
 position = Vector2(512, 551)
-script = ExtResource("11_yymet")
 
-[node name="Sprite2D" type="Sprite2D" parent="KeyDoor"]
-position = Vector2(-2, 5)
-scale = Vector2(0.335938, 0.757813)
-texture = ExtResource("2_3mwrl")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="KeyDoor"]
-position = Vector2(-3, 3)
-shape = SubResource("RectangleShape2D_f837q")
-
-[node name="CodeDoor" type="Area2D" parent="."]
+[node name="CodeDoor" parent="." instance=ExtResource("11_dviqd")]
 position = Vector2(795, 552)
-scale = Vector2(0.44, 0.840002)
-script = ExtResource("13_fv6mm")
 
-[node name="Sprite2D" type="Sprite2D" parent="CodeDoor"]
-scale = Vector2(1, 1)
-texture = ExtResource("2_3mwrl")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CodeDoor"]
-position = Vector2(0, -2.38102)
-scale = Vector2(1, 1)
-shape = SubResource("RectangleShape2D_56e7b")
-
-[node name="Passcode" type="Area2D" parent="."]
-script = ExtResource("9_12i0b")
-item_data_resource = SubResource("Resource_usqk8")
-
-[node name="Sprite2D" type="Sprite2D" parent="Passcode"]
-position = Vector2(651, 579)
-texture = ExtResource("15_onbre")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Passcode"]
-position = Vector2(651, 579.5)
-shape = SubResource("RectangleShape2D_fv6mm")
+[node name="Passcode" parent="." instance=ExtResource("12_fv6mm")]
 
 [connection signal="body_entered" from="Player/ItemPickupArea" to="Player" method="_on_item_pickup_area_body_entered"]
 [connection signal="body_entered" from="Player/ItemPickupArea" to="Player/ItemManager" method="_on_item_pickup_area_body_entered"]
 [connection signal="body_entered" from="Spring" to="Spring" method="_on_body_entered"]
 [connection signal="body_entered" from="Spring3" to="Spring3" method="_on_body_entered"]
-[connection signal="body_entered" from="Key" to="Key" method="_on_body_entered"]
-[connection signal="body_entered" from="KeyDoor" to="KeyDoor" method="_on_body_entered"]
-[connection signal="body_entered" from="CodeDoor" to="CodeDoor" method="_on_body_entered"]
-[connection signal="body_entered" from="Passcode" to="Passcode" method="_on_body_entered"]
