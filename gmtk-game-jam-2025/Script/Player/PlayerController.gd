@@ -14,8 +14,7 @@ extends CharacterBody2D
 @export var air_deceleration: float = 1200 # For air control
 
 # References
-@onready var player_anim_controller = $"AnimatedSprite2D"
-@onready var input_manager = $"InputManager"
+@onready var player_anim_controller = %Sprite
 
 var coyote_timer: float = 0.0
 var jump_buffer_timer: float = 0.0
@@ -41,7 +40,7 @@ func _physics_process(delta) -> void:
 func apply_gravity(delta) -> void:
 	# --- GRAVITY AND TIMERS ---
 	if not is_on_floor():
-		player_anim_controller.play("jump")
+		player_anim_controller.play("air")
 		velocity.y += gravity * delta
 		coyote_timer -= delta
 	else:
@@ -49,14 +48,7 @@ func apply_gravity(delta) -> void:
 
 func move_player(delta) -> void:
 	# --- HORIZONTAL MOVEMENT ---
-	var input_x = 0
-	# Check the logical actions defined in the input manager
-	var move_left = input_manager.is_action_pressed("move_left")
-	var move_right = input_manager.is_action_pressed("move_right")
-	var move_up = input_manager.is_action_pressed("move_up")
-	var move_down = input_manager.is_action_pressed("move_down")
-	
-	input_x = int(move_right) - int(move_left)
+	var input_x = Input.get_axis("move_left", "move_right")
 		
 	var target_speed = input_x * speed
 	
@@ -76,7 +68,7 @@ func move_player(delta) -> void:
 
 func jump(delta) -> void:
 		# Cut the jump short if button is released and character is still rising.
-	if input_manager.is_action_just_released("jump") and velocity.y < 0:
+	if Input.is_action_just_released("jump") and velocity.y < 0:
 		velocity.y = velocity.y / jump_cut_gravity_multiplier
 		
 		# --- JUMP BUFFER ---
@@ -92,7 +84,7 @@ func jump(delta) -> void:
 	# we accept the jump. More forgiving that way.
 	if (coyote_timer > 0 or is_on_floor()) and jump_buffer_timer > 0:
 		velocity.y = -jumpForce
-		player_anim_controller.play("jump")
+		player_anim_controller.play("air")
 		# Reset the timers to prevent double jumps.
 		coyote_timer = 0
 		jump_buffer_timer = 0
