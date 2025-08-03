@@ -59,7 +59,7 @@ func unload_level() -> void:
 	if current_level == null:
 		return
 
-	current_level.free()
+	current_level.queue_free()
 	current_level_path = ""
 
 

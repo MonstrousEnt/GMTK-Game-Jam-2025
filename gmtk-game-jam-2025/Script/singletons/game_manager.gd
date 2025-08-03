@@ -70,6 +70,8 @@ func quit_level() -> void:
 	if !in_level:
 		return
 
+	get_tree().paused = true
+
 	in_level = false
 	LevelManager.unload_level()
 
@@ -83,7 +85,7 @@ func unlock_next_level() -> void:
 	if LevelManager.current_level == null:
 		return
 
-	var current_level_idx = levels.find(LevelManager.current_level_path)
+	var current_level_idx = levels.find(LevelManager.current_level.level_data)
 
 	# Return if current level isnt found
 	if current_level_idx <= -1:
@@ -93,8 +95,10 @@ func unlock_next_level() -> void:
 	if current_level_idx + 1 >= levels.size():
 		return
 
+	var new_level = levels[current_level_idx + 1]
+
 	# Unlock next level
-	levels[current_level_idx + 1].unlocked = true
+	new_level.unlocked = true
 
 
 func _connect_signals() -> void:
@@ -115,6 +119,7 @@ func _on_level_loaded() -> void:
 	in_level = true
 	get_tree().paused = false
 	UIManager.set_level_map_to_current()
+	LevelManager.player_rotation = 0
 	LevelManager.start_level()
 
 
