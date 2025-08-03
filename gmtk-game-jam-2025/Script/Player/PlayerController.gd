@@ -32,7 +32,7 @@ class_name Player extends CharacterBody2D
 
 
 # References
-@onready var player_camera: Camera2D = %Camera
+@onready var player_camera : Camera2D = %Camera
 @onready var player_anim_controller: AnimationController = %Sprite
 
 
@@ -114,6 +114,13 @@ func move_player(delta) -> void:
 			velocity.x = move_toward(velocity.x, target_speed, air_acceleration * delta)
 		else:
 			velocity.x = move_toward(velocity.x, 0, air_deceleration * delta)
+			
+	flip(input_x)
+
+func flip(input_horizontal : float) -> void:
+	# Flip sprite based on horizontal input, regardless of state
+	if (input_horizontal != 0):
+		player_anim_controller.flip_h = input_horizontal < 0
 
 func jump(delta) -> void:
 		# Cut the jump short if button is released and character is still rising.
