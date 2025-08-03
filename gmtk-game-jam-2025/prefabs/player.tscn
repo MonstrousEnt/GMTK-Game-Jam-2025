@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3 uid="uid://xy4iq88w5vq3"]
+[gd_scene load_steps=14 format=3 uid="uid://xy4iq88w5vq3"]
 
 [ext_resource type="Script" uid="uid://vrp1dukmiq17" path="res://Script/Player/PlayerController.gd" id="1_617v1"]
 [ext_resource type="Texture2D" uid="uid://bi73bgfo5lj6y" path="res://Sprites/Placeholder/placeholder_idle.png" id="2_k7aqk"]
 [ext_resource type="Texture2D" uid="uid://dishd4vr77cgq" path="res://Sprites/Placeholder/placeholder_alien.png" id="3_udifs"]
 [ext_resource type="Script" uid="uid://c77oddhm0ylxd" path="res://Script/Player/PlayerAnimController.gd" id="4_rpba7"]
 [ext_resource type="Script" uid="uid://dnjw665d0a14v" path="res://Script/Managers/input_manager.gd" id="5_43tkh"]
+[ext_resource type="Script" uid="uid://cd74gdajmdfpu" path="res://Script/Managers/inventory_manager.gd" id="7_m2qjg"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_876be"]
 atlas = ExtResource("3_udifs")
@@ -32,7 +33,10 @@ animations = [{
 "name": &"idle",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_k7aqk")
+}],
 "loop": true,
 "name": &"jump",
 "speed": 5.0
@@ -58,19 +62,42 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y00gc"]
 size = Vector2(21, 33)
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ffy13"]
+size = Vector2(19, 32.0443)
+
+[node name="MainScene" type="Node"]
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(-421, -1049)
 scale = Vector2(3, 3)
 script = ExtResource("1_617v1")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
 position = Vector2(169, 530)
 sprite_frames = SubResource("SpriteFrames_gju3c")
-animation = &"walk"
+animation = &"jump"
 script = ExtResource("4_rpba7")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+visible = false
 position = Vector2(169.5, 529.5)
 shape = SubResource("RectangleShape2D_y00gc")
 
-[node name="InputManager" type="Node2D" parent="."]
+[node name="InputManager" type="Node2D" parent="Player"]
 script = ExtResource("5_43tkh")
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(330.667, 519)
+scale = Vector2(0.333333, 0.333333)
+
+[node name="ItemPickupArea" type="Area2D" parent="Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/ItemPickupArea"]
+position = Vector2(169.667, 530)
+scale = Vector2(1, 1.00902)
+shape = SubResource("RectangleShape2D_ffy13")
+
+[node name="InventorySystem" type="Node2D" parent="Player"]
+script = ExtResource("7_m2qjg")
+
+[connection signal="body_entered" from="Player/ItemPickupArea" to="Player" method="_on_item_pickup_area_body_entered"]

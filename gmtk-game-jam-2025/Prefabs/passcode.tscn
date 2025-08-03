@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://dgwcl5odvkmeb"]
+
+[ext_resource type="Script" uid="uid://bwhh8x868cvqj" path="res://Script/Item/pickup.gd" id="1_d7ll1"]
+[ext_resource type="Script" uid="uid://ufxwhd47ytup" path="res://Script/Item/passcode.gd" id="2_4tc8n"]
+[ext_resource type="Texture2D" uid="uid://bd72vw4q8ttec" path="res://Sprites/Placeholder/passcode_placeholder.png" id="3_g4xmp"]
+
+[sub_resource type="Resource" id="Resource_usqk8"]
+script = ExtResource("2_4tc8n")
+passcode = 1234
+item_name = "passcode"
+item_id = 1
+metadata/_custom_type_script = "uid://ufxwhd47ytup"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fv6mm"]
+size = Vector2(26, 31)
+
+[node name="Passcode" type="Area2D"]
+script = ExtResource("1_d7ll1")
+item_data_resource = SubResource("Resource_usqk8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(651, 579)
+texture = ExtResource("3_g4xmp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(651, 579.5)
+shape = SubResource("RectangleShape2D_fv6mm")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
