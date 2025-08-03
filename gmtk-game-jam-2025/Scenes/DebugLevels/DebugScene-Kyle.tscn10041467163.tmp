@@ -1,0 +1,193 @@
+[gd_scene load_steps=23 format=3 uid="uid://bj46ihnf55nem"]
+
+[ext_resource type="Script" uid="uid://vrp1dukmiq17" path="res://Script/Player/PlayerController.gd" id="1_2be4l"]
+[ext_resource type="Texture2D" uid="uid://dx8om2ecwbj7c" path="res://icon.svg" id="2_3mwrl"]
+[ext_resource type="Texture2D" uid="uid://bi73bgfo5lj6y" path="res://Sprites/Placeholder/placeholder_idle.png" id="3_g0g1r"]
+[ext_resource type="Script" uid="uid://c77oddhm0ylxd" path="res://Script/Player/PlayerAnimController.gd" id="3_y00gc"]
+[ext_resource type="Texture2D" uid="uid://dishd4vr77cgq" path="res://Sprites/Placeholder/placeholder_alien.png" id="4_3pjhv"]
+[ext_resource type="Script" uid="uid://dnjw665d0a14v" path="res://Script/Managers/input_manager.gd" id="5_3pjhv"]
+[ext_resource type="Script" uid="uid://bsyluc2ps5gn6" path="res://DebugLevels/item_manager.gd" id="6_f40ju"]
+[ext_resource type="Script" uid="uid://bguyxunwjsg3q" path="res://Script/Obstacles/spring_controller.gd" id="7_dkv6e"]
+[ext_resource type="Texture2D" uid="uid://cctfi6camdrbj" path="res://Sprites/Placeholder/spring_placeholder.png" id="8_nr7cw"]
+[ext_resource type="Script" uid="uid://bwhh8x868cvqj" path="res://DebugLevels/item.gd" id="9_12i0b"]
+[ext_resource type="Texture2D" uid="uid://dgsbgvwcy7dtk" path="res://Sprites/Placeholder/key_placeholder.png" id="11_ffy13"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_876be"]
+atlas = ExtResource("4_3pjhv")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xmas2"]
+atlas = ExtResource("4_3pjhv")
+region = Rect2(32, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ehpa4"]
+atlas = ExtResource("4_3pjhv")
+region = Rect2(64, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fq6e3"]
+atlas = ExtResource("4_3pjhv")
+region = Rect2(96, 0, 32, 36)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gju3c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_g0g1r")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_g0g1r")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_876be")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xmas2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ehpa4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fq6e3")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y00gc"]
+size = Vector2(21, 33)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ffy13"]
+size = Vector2(19, 32.0443)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3mwrl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3mwrl"]
+size = Vector2(126.667, 118.634)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dkv6e"]
+size = Vector2(66, 27)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yymet"]
+size = Vector2(27, 55)
+
+[node name="MainScene" type="Node"]
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(-421, -1049)
+scale = Vector2(3, 3)
+script = ExtResource("1_2be4l")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+position = Vector2(169, 530)
+sprite_frames = SubResource("SpriteFrames_gju3c")
+animation = &"jump"
+script = ExtResource("3_y00gc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+visible = false
+position = Vector2(169.5, 529.5)
+shape = SubResource("RectangleShape2D_y00gc")
+
+[node name="InputManager" type="Node2D" parent="Player"]
+script = ExtResource("5_3pjhv")
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(330.667, 519)
+scale = Vector2(0.333333, 0.333333)
+
+[node name="ItemManager" type="Node2D" parent="Player"]
+script = ExtResource("6_f40ju")
+
+[node name="ItemPickupArea" type="Area2D" parent="Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/ItemPickupArea"]
+position = Vector2(169.667, 530)
+scale = Vector2(1, 1.00902)
+shape = SubResource("RectangleShape2D_ffy13")
+
+[node name="TestFloor" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="TestFloor"]
+position = Vector2(576, 628.5)
+scale = Vector2(9, 0.320313)
+texture = ExtResource("2_3mwrl")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="TestFloor/Sprite2D"]
+physics_material_override = SubResource("PhysicsMaterial_3mwrl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestFloor/Sprite2D/StaticBody2D"]
+position = Vector2(0.33334, -4.68286)
+shape = SubResource("RectangleShape2D_3mwrl")
+
+[node name="Spring" type="Area2D" parent="."]
+position = Vector2(1093, 524)
+rotation = -1.5708
+script = ExtResource("7_dkv6e")
+spring_power = 1200
+
+[node name="Sprite2D" type="Sprite2D" parent="Spring"]
+scale = Vector2(3, 3)
+texture = ExtResource("8_nr7cw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spring"]
+position = Vector2(0, -13.5)
+shape = SubResource("RectangleShape2D_dkv6e")
+
+[node name="Spring2" type="Area2D" parent="."]
+position = Vector2(544, 559)
+script = ExtResource("7_dkv6e")
+spring_power = 600
+spring_duration = 0.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Spring2"]
+scale = Vector2(3, 3)
+texture = ExtResource("8_nr7cw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spring2"]
+position = Vector2(0, -13.5)
+shape = SubResource("RectangleShape2D_dkv6e")
+
+[node name="Spring3" type="Area2D" parent="."]
+position = Vector2(51, 443)
+rotation = 1.06291
+script = ExtResource("7_dkv6e")
+spring_power = 1200
+
+[node name="Sprite2D" type="Sprite2D" parent="Spring3"]
+scale = Vector2(3, 3)
+texture = ExtResource("8_nr7cw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spring3"]
+position = Vector2(0, -13.5)
+shape = SubResource("RectangleShape2D_dkv6e")
+
+[node name="Key" type="Area2D" parent="." groups=["pickup"]]
+position = Vector2(343, 559)
+script = ExtResource("9_12i0b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Key"]
+position = Vector2(22.5, 17.5)
+shape = SubResource("RectangleShape2D_yymet")
+
+[node name="Sprite2D" type="Sprite2D" parent="Key"]
+position = Vector2(22, 22.5)
+scale = Vector2(2.375, 2.25)
+texture = ExtResource("11_ffy13")
+
+[connection signal="body_entered" from="Player/ItemPickupArea" to="Player" method="_on_item_pickup_area_body_entered"]
+[connection signal="body_entered" from="Player/ItemPickupArea" to="Player/ItemManager" method="_on_item_pickup_area_body_entered"]
+[connection signal="body_entered" from="Spring" to="Spring" method="_on_body_entered"]
+[connection signal="body_entered" from="Spring2" to="Spring2" method="_on_body_entered"]
+[connection signal="body_entered" from="Spring3" to="Spring3" method="_on_body_entered"]
+[connection signal="body_entered" from="Key" to="Key" method="_on_body_entered"]
