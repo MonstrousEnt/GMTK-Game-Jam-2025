@@ -107,5 +107,8 @@ func _disconnect_signals() -> void:
 
 
 ## Handle a body entering a room connection area
-func _on_player_entered_connection(_room_connection: RoomConnection, _player: Node2D) -> void:
-	print("TODO: ROOM TRANSITIONS")
+func _on_player_entered_connection(room_connection: RoomConnection, player: Node2D) -> void:
+	if !GameManager.in_level || !player.is_active:
+		return
+
+	LevelManager.change_room(room_connection)

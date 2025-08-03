@@ -9,6 +9,7 @@ signal loading_progress_changed(progress: float)
 ## Emitted when in level value changed
 signal in_level_changed
 
+## Setters
 
 ## Whether the game is loading
 var loading: bool = false:
