@@ -1,4 +1,20 @@
+"""
+	Project Name: Non Euclidean Puzzle Platformer
+	Team Name: GMTL 2025 Game Jam Team
+	Authors: Daniel, Kyle
+	Created Date: July 30, 2023
+	Last Updated: August 3, 2023
+	Description: This is class for inputs for the player
+	Notes: 
+	Resoucres:
+"""
+
 extends Node2D
+#class_name InputMnager
+
+##
+## Class Variables
+##
 
 # Map action to list of physical inputs.
 var input_map = {
@@ -11,39 +27,9 @@ var input_map = {
 	"use_item": [KEY_TAB, "X"]
 }
 
-#--- Handle if an action was just released ---
-# Jump action still needs setup properly in Godot's project settings!.
-func is_action_just_released(action_name: String) -> bool:
-	if InputMap.has_action(action_name):
-		if Input.is_action_just_released(action_name):
-			return true
-	return false
-
-#--- Handle if action is currently being held down ---
-func is_action_pressed(action_name: String) -> bool:
-	if input_map.has(action_name):
-		for input in input_map[action_name]:
-			if input is int:
-				if Input.is_key_pressed(input):
-					return true
-			elif input is String:
-				var joy_button = _get_joy_button_from_string(input)
-				if Input.is_joy_button_pressed(0, joy_button):
-					return true
-	return false
-
-#--- Handle is action was just pressed this frame ---
-func is_action_just_pressed(action_name: String) -> bool:
-	if input_map.has(action_name):
-		for input in input_map[action_name]:
-			if input is int:
-				if Input.is_action_just_pressed(action_name):
-					return true
-				elif input is String:
-					var joy_button = _get_joy_button_from_string(input)
-					if input.is_joy_button_pressed(0, joy_button):
-						return true
-	return false
+##
+## BUILT IN METHODS
+##
 
 #--- Convert's joypad button string to its integer value. ---
 func _get_joy_button_from_string(button_string: String):
@@ -58,3 +44,41 @@ func _get_joy_button_from_string(button_string: String):
 		"dpad_down": return JOY_BUTTON_DPAD_DOWN
 	# 
 	return -1
+
+##
+## METHODS
+##
+
+#--- Handle if an action was just released ---
+# Jump action still needs setup properly in Godot's project settings!.
+func is_action_just_released(action_name: String) -> bool:
+	if (InputMap.has_action(action_name)):
+		if (Input.is_action_just_released(action_name)):
+			return true
+	return false
+
+#--- Handle if action is currently being held down ---
+func is_action_pressed(action_name: String) -> bool:
+	if (input_map.has(action_name)):
+		for input in input_map[action_name]:
+			if (input is int):
+				if (Input.is_key_pressed(input)):
+					return true
+			elif (input is String):
+				var joy_button = _get_joy_button_from_string(input)
+				if Input.is_joy_button_pressed(0, joy_button):
+					return true
+	return false
+
+#--- Handle is action was just pressed this frame ---
+func is_action_just_pressed(action_name: String) -> bool:
+	if (input_map.has(action_name)):
+		for input in input_map[action_name]:
+			if (input is int):
+				if (Input.is_action_just_pressed(action_name)):
+					return true
+				elif (input is String):
+					var joy_button = _get_joy_button_from_string(input)
+					if (input.is_joy_button_pressed(0, joy_button)):
+						return true
+	return false
