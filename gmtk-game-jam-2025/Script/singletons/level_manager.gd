@@ -29,6 +29,9 @@ var current_level_path: String
 ## Current level node
 var current_level: Level
 
+## Current player rotation 
+var player_rotation: float = 0
+
 
 ##
 ## BUILT IN METHODS
@@ -56,7 +59,7 @@ func unload_level() -> void:
 	if current_level == null:
 		return
 
-	current_level.free()
+	current_level.queue_free()
 	current_level_path = ""
 
 
@@ -67,6 +70,8 @@ func start_level() -> void:
 
 	# Set current room to level starting room
 	current_level.current_room = current_level.starting_room
+	current_level.current_room.active = true
+	current_level.update_rooms_visibility()
 
 	# Move player to starting spawn point
 	player.global_position = current_level.starting_spawn_point.global_position
@@ -80,6 +85,39 @@ func start_level() -> void:
 	player.is_active = true
 
 
+func change_room(room_connection: RoomConnection) -> void:
+	if room_connection.room == null:
+		return
+
+	var new_room = room_connection.target_connection.room
+	var target_connection = room_connection.target_connection
+
+	# Deactivate player
+	player.is_active = false
+
+	# Update player rotation
+	player_rotation += room_connection.connection_rotation
+
+	# Set room rotation and position
+	new_room.rotation_degrees = player_rotation
+
+	# Move player to target room entrance
+	player.global_position = target_connection.to_global(target_connection.player_entrance_offset)
+
+	# Update current room
+	current_level.current_room.active = false
+	current_level.current_room = new_room
+	current_level.current_room.active = true
+	update_player_camera_limits()
+	player.player_camera.reset_smoothing()
+
+	# Set room visibilities
+	current_level.update_rooms_visibility()
+
+	# Reactivate player
+	player.is_active = true
+
+
 ## Update the player cameras limits to be inside the current room
 func update_player_camera_limits() -> void:
 	if current_level == null || current_level.current_room == null || current_level.current_room.tilemap == null:
@@ -90,33 +128,30 @@ func update_player_camera_limits() -> void:
 
 		return
 
-	var tile_size = current_level.current_room.tilemap.tile_set.tile_size
-	var room_rect = current_level.current_room.tilemap.get_used_rect()
-	var room_offset = current_level.current_room.global_position
+	# TODO: Fix camera limits to work with level rotation
 
-	player.player_camera.limit_top = room_rect.position.y * tile_size.y + room_offset.y
-	player.player_camera.limit_left = room_rect.position.x * tile_size.x + room_offset.x
-	player.player_camera.limit_bottom = room_rect.end.y * tile_size.y + room_offset.y
-	player.player_camera.limit_right = room_rect.end.x * tile_size.x + room_offset.x
-
-	var viewport_rect := get_viewport().get_visible_rect()
-
-	if room_rect.size.x * tile_size.x < viewport_rect.size.x:
-		var size_diff := viewport_rect.size.x - float(room_rect.size.x * tile_size.x)
-		print(size_diff)
-
-		player.player_camera.limit_left -= int(ceil(size_diff / 2))
-		player.player_camera.limit_right += int(ceil(size_diff / 2))
-
-	if room_rect.size.y * tile_size.y < viewport_rect.size.y:
-		var size_diff := viewport_rect.size.y - float(room_rect.size.y * tile_size.y)
-		print(size_diff)
-
-		player.player_camera.limit_top -= int(ceil(size_diff / 2))
-		player.player_camera.limit_bottom += int(ceil(size_diff / 2))
-
-
-
+	# var tile_size = current_level.current_room.tilemap.tile_set.tile_size
+	# var room_rect = current_level.current_room.tilemap.get_used_rect()
+	# var room_offset = current_level.current_room.global_position
+	#
+	# player.player_camera.limit_top = room_rect.position.y * tile_size.y + room_offset.y
+	# player.player_camera.limit_left = room_rect.position.x * tile_size.x + room_offset.x
+	# player.player_camera.limit_bottom = room_rect.end.y * tile_size.y + room_offset.y
+	# player.player_camera.limit_right = room_rect.end.x * tile_size.x + room_offset.x
+	#
+	# var viewport_rect := get_viewport().get_visible_rect()
+	#
+	# if room_rect.size.x * tile_size.x < viewport_rect.size.x:
+	# 	var size_diff := viewport_rect.size.x - float(room_rect.size.x * tile_size.x)
+	#
+	# 	player.player_camera.limit_left -= int(ceil(size_diff / 2))
+	# 	player.player_camera.limit_right += int(ceil(size_diff / 2))
+	#
+	# if room_rect.size.y * tile_size.y < viewport_rect.size.y:
+	# 	var size_diff := viewport_rect.size.y - float(room_rect.size.y * tile_size.y)
+	#
+	# 	player.player_camera.limit_top -= int(ceil(size_diff / 2))
+	# 	player.player_camera.limit_bottom += int(ceil(size_diff / 2))
 
 
 ## Update the status of level loading

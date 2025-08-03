@@ -9,7 +9,11 @@ signal room_data_changed
 
 
 ## Whether this is the current active room in the level
-var active: bool = false
+var active: bool = false:
+	set(value):
+		active = value
+		if tilemap != null:
+			tilemap.collision_enabled = active
 
 
 ## All room connections in this room
@@ -52,6 +56,8 @@ func _ready() -> void:
 	_set_childrens_room()
 	_connect_signals()
 	set_map_viewport()
+	if tilemap != null:
+		tilemap.collision_enabled = active
 
 
 func _exit_tree() -> void:
@@ -107,5 +113,8 @@ func _disconnect_signals() -> void:
 
 
 ## Handle a body entering a room connection area
-func _on_player_entered_connection(_room_connection: RoomConnection, _player: Node2D) -> void:
-	print("TODO: ROOM TRANSITIONS")
+func _on_player_entered_connection(room_connection: RoomConnection, player: Node2D) -> void:
+	if !GameManager.in_level || !player.is_active:
+		return
+
+	LevelManager.change_room(room_connection)

@@ -37,9 +37,14 @@ signal player_entered(room_connection: RoomConnection, player: Node2D)
 		player_entrance_offset = value
 		queue_redraw()
 
+		if player_debug_sprite != null:
+			player_debug_sprite.position = player_entrance_offset
+
 ## Draw debug visuals durring runtime
 @export var debug_draw: bool = false
 
+var player_animations_path: String = "res://assets/resources/player_sprite_frames.tres"
+var player_debug_sprite: AnimatedSprite2D
 
 ##
 ## BUILT IN METHODS
@@ -50,6 +55,19 @@ func _ready() -> void:
 	_connect_signals()
 
 
+func _enter_tree() -> void:
+	if !Engine.is_editor_hint():
+		return
+
+	var player_animations = load(player_animations_path) as SpriteFrames
+	player_debug_sprite = AnimatedSprite2D.new()
+	player_debug_sprite.modulate = Color(1, 1, 1, 0.5)
+	player_debug_sprite.sprite_frames = player_animations
+	player_debug_sprite.position = player_entrance_offset
+	self.add_child(player_debug_sprite)
+	player_debug_sprite.play("idle")
+
+
 func _process(_delta: float) -> void:
 	if Engine.is_editor_hint() && target_connection != null:
 		queue_redraw()
@@ -57,6 +75,12 @@ func _process(_delta: float) -> void:
 
 func _exit_tree() -> void:
 	_disconnect_signals()
+
+	if !Engine.is_editor_hint():
+		return
+
+	if player_debug_sprite is AnimatedSprite2D:
+		player_debug_sprite.queue_free()
 
 
 func _draw() -> void:
@@ -110,4 +134,8 @@ func _disconnect_signals() -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	player_entered.emit(self, body)
+	if !room.active:
+		return
+
+	if body is Player:
+		player_entered.emit(self, body)

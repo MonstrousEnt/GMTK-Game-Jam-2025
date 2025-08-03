@@ -98,6 +98,8 @@ func apply_gravity(delta) -> void:
 func move_player(delta) -> void:
 	# --- HORIZONTAL MOVEMENT ---
 	var input_x = Input.get_axis("move_left", "move_right")
+
+	player_anim_controller.flip_h = input_x < 0
 		
 	var target_speed = input_x * speed
 	

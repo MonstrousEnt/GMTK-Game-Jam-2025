@@ -22,7 +22,10 @@ extends Node2D
 
 
 ## Room the player is currently in
-var current_room: Room
+var current_room: Room:
+	set(value):
+		current_room = value
+
 
 
 ##
@@ -57,6 +60,16 @@ func update_level_data_room_data() -> void:
 			continue
 
 		level_data.room_data.append(room.room_data)
+
+
+## Set all rooms accept current room to not visible
+func update_rooms_visibility() -> void:
+	if rooms == null:
+		return
+
+	for room in rooms:
+		room.visible = room == current_room
+
 
 
 ## Connect to all room data signals
