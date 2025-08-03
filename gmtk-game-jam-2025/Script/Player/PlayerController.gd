@@ -9,6 +9,8 @@
 	Resoucres:
 """
 
+# Variables to tweak in editor
+
 class_name Player extends CharacterBody2D
 
 ##
@@ -21,6 +23,18 @@ class_name Player extends CharacterBody2D
 @export var deceleration: float = 3000
 @export var air_acceleration: float = 600 # For air control
 @export var air_deceleration: float = 1200 # For air control
+
+@export var is_active: bool = false:
+	set(value):
+		is_active = value
+		if is_active && player_camera != null:
+			player_camera.make_current()
+
+
+# References
+@onready var player_camera: Camera2D = %Camera
+@onready var player_anim_controller: AnimationController = %Sprite
+
 
 #Jump
 @export var jumpForce: float = 450
@@ -38,17 +52,20 @@ var jump_buffer_timer: float = 0.0
 var is_sprung: bool = false
 var spring_timer: float = 0.0
 
-# References
-@onready var player_anim_controller = $"AnimatedSprite2D"
-@onready var input_manager = $"InputManager"
-@onready var item_manager = $"ItemManager"
-
 
 ##
 ## BUILT IN METHODS
 ##
 
+
+func _ready() -> void:
+	if is_active:
+		player_camera.make_current()
+
 func _physics_process(delta) -> void:
+	if !is_active:
+		return
+
 	apply_gravity(delta)
 	jump(delta)
 	
@@ -72,24 +89,15 @@ func _physics_process(delta) -> void:
 func apply_gravity(delta) -> void:
 	# --- GRAVITY AND TIMERS ---
 	if (not is_on_floor()):
-		player_anim_controller.play("jump")
+		player_anim_controller.play("air")
 		velocity.y += gravity * delta
 		coyote_timer -= delta
 	else:
 		coyote_timer = coyote_time
 
-# Move the player, left and right
 func move_player(delta) -> void:
 	# --- HORIZONTAL MOVEMENT ---
-	var input_x = 0
-	
-	# Check the logical actions defined in the input manager
-	var move_left = input_manager.is_action_pressed("move_left")
-	var move_right = input_manager.is_action_pressed("move_right")
-	var move_up = input_manager.is_action_pressed("move_up")
-	var move_down = input_manager.is_action_pressed("move_down")
-	
-	input_x = int(move_right) - int(move_left)
+	var input_x = Input.get_axis("move_left", "move_right")
 		
 	var target_speed = input_x * speed
 	
@@ -107,10 +115,9 @@ func move_player(delta) -> void:
 		else:
 			velocity.x = move_toward(velocity.x, 0, air_deceleration * delta)
 
-# Jump for the player, noraml and long jump
 func jump(delta) -> void:
 		# Cut the jump short if button is released and character is still rising.
-	if (input_manager.is_action_just_released("jump") and velocity.y < 0):
+	if Input.is_action_just_released("jump") and velocity.y < 0:
 		velocity.y = velocity.y / jump_cut_gravity_multiplier
 		
 		# --- JUMP BUFFER ---
@@ -121,7 +128,7 @@ func jump(delta) -> void:
 		# Start the timer to countdown every frame jump was not pressed.
 		jump_buffer_timer -= delta
 		
-		if (input_manager.is_action_just_pressed("use_item")):
+		if (Input.is_action_just_pressed("use_item")):
 			InventoryManager.use_item(0)
 			
 	# --- EXECUTE JUMP ---
@@ -129,8 +136,9 @@ func jump(delta) -> void:
 	# we accept the jump. More forgiving that way.
 	if ((coyote_timer > 0 or is_on_floor()) and jump_buffer_timer > 0):
 		velocity.y = -jumpForce
-		player_anim_controller.play("jump")
-		
+
+		player_anim_controller.play("air")
+
 		# Reset the timers to prevent double jumps.
 		coyote_timer = 0
 		jump_buffer_timer = 0

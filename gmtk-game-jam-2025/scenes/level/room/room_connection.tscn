@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://ep3agw3ucl7a"]
+
+[ext_resource type="Script" uid="uid://wljckiq0vv6a" path="res://Script/level/room/room_connection.gd" id="1_shmf7"]
+
+[node name="RoomConnection" type="Area2D"]
+script = ExtResource("1_shmf7")

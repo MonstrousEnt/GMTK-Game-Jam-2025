@@ -1,0 +1,49 @@
+[gd_scene load_steps=2 format=3 uid="uid://deo0t4m1xst7u"]
+
+[ext_resource type="Script" uid="uid://bqd5ld18stih1" path="res://Script/menus/pause_menu.gd" id="1_fwndu"]
+
+[node name="PauseMenu" type="Control" node_paths=PackedStringArray("enter_focus")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_fwndu")
+enter_focus = NodePath("CenterContainer/VBoxContainer/ResumeButton")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CenterContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+bbcode_enabled = true
+text = "[font_size=32]Paused[/font_size]"
+fit_content = true
+horizontal_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Resume
+"
+
+[node name="OptionsButton" type="Button" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Options"
+
+[node name="QuitLevelButton" type="Button" parent="CenterContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quit Level"

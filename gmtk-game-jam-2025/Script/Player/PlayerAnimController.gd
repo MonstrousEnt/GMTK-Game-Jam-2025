@@ -9,7 +9,7 @@
 	Resoucres:
 """
 
-class_name PlayerAnimController extends AnimatedSprite2D
+class_name AnimationController extends AnimatedSprite2D
 
 ##
 ## METHODS
