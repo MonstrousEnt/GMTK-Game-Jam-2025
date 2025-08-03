@@ -2,6 +2,10 @@ class_name MenuState
 extends State
 
 
+## Control element to focus when entering this map state
+@export var enter_focus: Control
+
+
 ##
 ## BUILT IN METHODS
 ##
@@ -9,6 +13,12 @@ extends State
 
 func _ready() -> void:
 	self.visible = active
+
+
+func enter() -> void:
+	super()
+	if enter_focus is Control:
+		enter_focus.grab_focus()
 
 
 ##

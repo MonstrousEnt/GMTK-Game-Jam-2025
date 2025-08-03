@@ -31,6 +31,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("2_0li8b")
 initial_state = NodePath("Main Menu")
+auto_start = true
 
 [node name="MenuBackground" type="ColorRect" parent="CanvasLayer/Menus"]
 layout_mode = 1
@@ -48,6 +49,7 @@ options_menu = NodePath("../OptionsMenu")
 credits_menu = NodePath("../CreditsMenu")
 
 [node name="LevelMenu" parent="CanvasLayer/Menus" node_paths=PackedStringArray("main_menu") instance=ExtResource("4_hedv1")]
+unique_name_in_owner = true
 visible = false
 layout_mode = 1
 main_menu = NodePath("../Main Menu")

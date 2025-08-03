@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://be18qdbwovaoq" path="res://Script/menus/credits_menu.gd" id="1_due5w"]
 
-[node name="CreditsMenu" type="Control"]
+[node name="CreditsMenu" type="Control" node_paths=PackedStringArray("enter_focus")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,6 +10,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_due5w")
+enter_focus = NodePath("CenterContainer/VBoxContainer/BackButton")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1

@@ -55,6 +55,9 @@ func pause_game() -> void:
 	if get_tree().paused:
 		return
 
+	if !pause_menus.started:
+		pause_menus.start()
+
 	get_tree().paused = true
 	pause_menus.change_state(pause_menus.initial_state)
 	update_pause_menus()
@@ -89,10 +92,7 @@ func set_level_map_to_current() -> void:
 	if !(LevelManager.current_level is Level):
 		return
 
-	level_map_menu.level_map.level_data = LevelManager.current_level.level_data
-	level_map_menu.level_map.build_map_mesh()
-	level_map_menu.level_map.update_map_aabb()
-	level_map_menu.update_camera_fit()
+	level_map_menu.set_level_map_level(LevelManager.current_level)
 
 
 ## Update visibility of the pause menu

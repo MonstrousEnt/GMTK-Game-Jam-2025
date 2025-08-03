@@ -24,6 +24,16 @@ func _ready() -> void:
 	_create_level_buttons()
 
 
+func enter() -> void:
+	super()
+	if level_buttons.size() > 0:
+		level_buttons[0].grab_focus()
+		enter_focus = level_buttons[0]
+	else:
+		main_menu_button.grab_focus()
+		enter_focus = main_menu_button
+
+
 func _exit_tree() -> void:
 	_disconnect_signals()
 
@@ -38,6 +48,7 @@ func _create_level_buttons() -> void:
 	for level in GameManager.levels:
 		# Create button
 		var button: LevelButton = level_button_scene.instantiate()
+		level_buttons.append(button)
 		level_buttons_container.add_child(button)
 
 		# Set button properties

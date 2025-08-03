@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource("1_x566k")
-room_position = Vector3(0, 0, 0.5)
+room_position = Vector3(0, 0.125, 0.5)
 room_rotation = Vector3(90, 0, 0)
-room_size = Vector2(1, 1)
+room_size = Vector2(1, 0.75)
 metadata/_custom_type_script = "uid://bb60a30xsl0h1"

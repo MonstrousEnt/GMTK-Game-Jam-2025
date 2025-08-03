@@ -21,10 +21,23 @@ var active: bool = false
 		_connect_signals()
 
 
+@export var tilemap: TileMapLayer:
+	set(value):
+		tilemap = value
+		update_configuration_warnings()
+
+
 @export var room_data: RoomData:
 	set(value):
 		room_data = value
 		room_data_changed.emit()
+
+
+@export var viewport_texture: ViewportTexture
+
+
+@onready var viewport: SubViewport = %SubViewport
+@onready var map_camera: Camera2D = %MapCamera
 
 
 ##
@@ -35,10 +48,18 @@ var active: bool = false
 func _ready() -> void:
 	_set_childrens_room()
 	_connect_signals()
+	set_map_viewport()
 
 
 func _exit_tree() -> void:
 	_disconnect_signals()
+
+
+func _get_configuration_warnings() -> PackedStringArray:
+	if tilemap == null:
+		return ["tilemap not selected for room"]
+
+	return []
 
 
 ##
@@ -51,6 +72,21 @@ func _set_childrens_room() -> void:
 	for room_connection in room_connections:
 		if room_connection is RoomConnection:
 			room_connection.room = self
+
+
+## Set the size of the viewport and position of camera for map rendering
+func set_map_viewport() -> void:
+	if tilemap == null:
+		return
+
+	var tilemap_bounds := tilemap.get_used_rect()
+
+	viewport.size = tilemap_bounds.size * tilemap.tile_set.tile_size
+	map_camera.position = Vector2(tilemap_bounds.get_center() * tilemap.tile_set.tile_size) + Vector2(tilemap.tile_set.tile_size) / 2
+
+	# Create copy of tilemap for map rendering
+	viewport.add_child(tilemap.duplicate())
+
 
 
 func _connect_signals() -> void:

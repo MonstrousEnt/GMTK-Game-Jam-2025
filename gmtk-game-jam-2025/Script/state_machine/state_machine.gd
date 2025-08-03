@@ -7,7 +7,9 @@ signal state_changed
 
 
 @export var initial_state: State
+@export var auto_start: bool = false
 
+var started: bool = false
 var current_state: State
 var states: Dictionary[String, State] = {}
 
@@ -17,7 +19,8 @@ var states: Dictionary[String, State] = {}
 
 func _ready():
 	states = _init_child_states()
-	change_state(initial_state)
+	if auto_start:
+		start()
 
 
 func _process(delta):
@@ -50,6 +53,13 @@ func _unhandled_input(event):
 #
 # METHODS
 #
+
+
+## Start the state machine and enter the first state
+func start() -> void:
+	change_state(initial_state)
+	started = true
+
 
 ## Change the current state to a new state
 func change_state(new_state: State) -> void:

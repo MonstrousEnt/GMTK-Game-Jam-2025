@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://diyr1dta77tyr" path="res://Script/menus/main_menu.gd" id="1_xqga4"]
 
-[node name="Main Menu" type="Control"]
+[node name="Main Menu" type="Control" node_paths=PackedStringArray("enter_focus")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,6 +10,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xqga4")
+enter_focus = NodePath("CenterContainer/VBoxContainer/CenterContainer/VBoxContainer/PlayButton")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 1

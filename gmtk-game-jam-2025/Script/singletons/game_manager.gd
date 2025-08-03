@@ -72,6 +72,9 @@ func quit_level() -> void:
 	in_level = false
 	LevelManager.unload_level()
 
+	if UIManager.menus.current_state.enter_focus is Control:
+		UIManager.menus.current_state.enter_focus.grab_focus()
+
 
 ## Unlock the next level in the game if there is one
 func unlock_next_level() -> void:
@@ -123,4 +126,3 @@ func _on_level_load_failed() -> void:
 ## Handle level load progress changed signal
 func _on_level_load_progress_changed() -> void:
 	loading_progress_changed.emit(LevelManager.level_load_progress)
-
