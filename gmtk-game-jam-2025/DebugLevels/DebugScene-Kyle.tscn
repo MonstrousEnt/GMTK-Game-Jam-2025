@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bj46ihnf55nem"]
+[gd_scene load_steps=28 format=3 uid="uid://bj46ihnf55nem"]
 
 [ext_resource type="Script" uid="uid://vrp1dukmiq17" path="res://Script/Player/PlayerController.gd" id="1_2be4l"]
 [ext_resource type="Texture2D" uid="uid://dx8om2ecwbj7c" path="res://icon.svg" id="2_3mwrl"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://c77oddhm0ylxd" path="res://Script/Player/PlayerAnimController.gd" id="3_y00gc"]
 [ext_resource type="Texture2D" uid="uid://dishd4vr77cgq" path="res://Sprites/Placeholder/placeholder_alien.png" id="4_3pjhv"]
 [ext_resource type="Script" uid="uid://dnjw665d0a14v" path="res://Script/Managers/input_manager.gd" id="5_3pjhv"]
+[ext_resource type="AudioStream" uid="uid://dl2xb425sa3te" path="res://Audio/SFX/SFX_Jump.wav" id="6_cd1ue"]
 [ext_resource type="Script" uid="uid://bguyxunwjsg3q" path="res://Script/Objects/spring_controller.gd" id="7_dkv6e"]
 [ext_resource type="Texture2D" uid="uid://cctfi6camdrbj" path="res://Sprites/Placeholder/spring_placeholder.png" id="8_nr7cw"]
 [ext_resource type="PackedScene" uid="uid://ca05xg7hs0n7" path="res://Prefabs/key.tscn" id="9_yymet"]
@@ -132,6 +133,9 @@ script = SubResource("GDScript_f40ju")
 position = Vector2(169.667, 530)
 scale = Vector2(1, 1.00902)
 shape = SubResource("RectangleShape2D_ffy13")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Player"]
+stream = ExtResource("6_cd1ue")
 
 [node name="TestFloor" type="Node2D" parent="."]
 
