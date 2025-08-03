@@ -48,7 +48,9 @@ fit_content = true
 layout_mode = 2
 bbcode_enabled = true
 text = "[b]Kyle[/b]
-Programmer"
+Programmer
+Sound
+Music"
 fit_content = true
 
 [node name="RichTextLabel4" type="RichTextLabel" parent="CenterContainer/VBoxContainer/VBoxContainer"]
