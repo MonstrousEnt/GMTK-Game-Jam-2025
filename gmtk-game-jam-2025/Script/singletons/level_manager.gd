@@ -70,6 +70,7 @@ func start_level() -> void:
 
 	# Set current room to level starting room
 	current_level.current_room = current_level.starting_room
+	current_level.current_room.active = true
 	current_level.update_rooms_visibility()
 
 	# Move player to starting spawn point
@@ -104,7 +105,9 @@ func change_room(room_connection: RoomConnection) -> void:
 	player.global_position = target_connection.to_global(target_connection.player_entrance_offset)
 
 	# Update current room
+	current_level.current_room.active = false
 	current_level.current_room = new_room
+	current_level.current_room.active = true
 	update_player_camera_limits()
 	player.player_camera.reset_smoothing()
 

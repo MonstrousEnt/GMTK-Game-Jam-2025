@@ -9,7 +9,11 @@ signal room_data_changed
 
 
 ## Whether this is the current active room in the level
-var active: bool = false
+var active: bool = false:
+	set(value):
+		active = value
+		if tilemap != null:
+			tilemap.collision_enabled = active
 
 
 ## All room connections in this room
@@ -52,6 +56,8 @@ func _ready() -> void:
 	_set_childrens_room()
 	_connect_signals()
 	set_map_viewport()
+	if tilemap != null:
+		tilemap.collision_enabled = active
 
 
 func _exit_tree() -> void:

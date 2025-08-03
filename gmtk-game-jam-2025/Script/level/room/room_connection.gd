@@ -134,5 +134,8 @@ func _disconnect_signals() -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
+	if !room.active:
+		return
+
 	if body is Player:
 		player_entered.emit(self, body)
