@@ -1,10 +1,19 @@
-class_name LevelButton
-extends Button
+"""
+	Project Name: Edge of Origin
+	Team Name: Edge of Origin Team
+	Authors: Daniel, Max
+	Created Date: July 30, 2025
+	Last Updated: August 3, 2025
+	Description: This is class for level button
+	Notes: 
+	Resources:
+"""
 
+class_name LevelButton extends Button
 
-## Emitted when the level button is pressed
-signal level_pressed(level_data: LevelData)
-
+##
+## SETTERS AND GETTERS
+##
 
 var force_disabled: bool = false:
 	set(value):
@@ -29,9 +38,15 @@ var level_data: LevelData:
 
 
 ##
-## BUILT IN METHODS
+## SIGNAL VARIABLES
 ##
 
+## Emitted when the level button is pressed
+signal level_pressed(level_data: LevelData)
+
+##
+## BUILT IN METHODS
+##
 
 func _ready() -> void:
 	_connect_signals()
@@ -41,11 +56,9 @@ func _ready() -> void:
 func _exit_tree() -> void:
 	_disconnect_signals()
 
-
 ##
-## METHODS
+## CLASS METHODS
 ##
-
 
 ## Update button to display level data
 func update_button() -> void:
@@ -64,21 +77,21 @@ func update_button() -> void:
 	self.text = str(level_number)
 	self.disabled = !level_data.unlocked || force_disabled
 
+##
+## SIGNAL METHODS
+##
 
 func _connect_signals() -> void:
 	self.pressed.connect(_on_pressed)
 	_connect_level_data_signals()
 
-
 func _disconnect_signals() -> void:
 	self.pressed.disconnect(_on_pressed)
 	_disconnect_level_data_signals()
 
-
 ## Handle button pressed
 func _on_pressed() -> void:
 	level_pressed.emit(level_data)
-
 
 ## Connect level data resource signals
 func _connect_level_data_signals() -> void:
@@ -91,7 +104,6 @@ func _connect_level_data_signals() -> void:
 	if !level_data.level_completed_changed.is_connected(_on_level_completed_changed):
 		level_data.level_completed_changed.connect(_on_level_completed_changed)
 
-
 ## Disconnect level data resource signals
 func _disconnect_level_data_signals() -> void:
 	if level_data == null:
@@ -103,11 +115,9 @@ func _disconnect_level_data_signals() -> void:
 	if level_data.level_completed_changed.is_connected(_on_level_completed_changed):
 		level_data.level_completed_changed.disconnect(_on_level_completed_changed)
 
-
 ## Handle level unlocked value changed
 func _on_level_unlocked_changed() -> void:
 	update_button()
-
 
 ## Handle level completed value changed
 func _on_level_completed_changed() -> void:

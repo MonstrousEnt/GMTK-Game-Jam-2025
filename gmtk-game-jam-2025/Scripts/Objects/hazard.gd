@@ -1,12 +1,12 @@
 """
-	Project Name: Non Euclidean Puzzle Platformer
-	Team Name: Vextor Games
+	Project Name: Edge of Origin
+	Team Name: Edge of Origin Team
 	Authors: Daniel, Kyle
 	Created Date: August 2, 2023
 	Last Updated: August 3, 2023
 	Description: This class any hazards in the game
 	Notes: 
-	Resoucres:
+	Resources:
 """
 
 class_name Hazard extends Area2D

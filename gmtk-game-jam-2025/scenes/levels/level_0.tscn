@@ -32,12 +32,12 @@ size = Vector2(112, 32)
 [sub_resource type="ViewportTexture" id="ViewportTexture_p6rmu"]
 viewport_path = NodePath("SubViewport")
 
-[node name="Level0" type="Node2D" node_paths=PackedStringArray("rooms", "starting_room", "starting_spawn_point")]
+[node name="Level0" type="Node2D" node_paths=PackedStringArray("starting_room", "starting_spawn_point", "rooms")]
 script = ExtResource("1_wjk5u")
 level_data = ExtResource("2_xy1qu")
-rooms = [NodePath("Room"), NodePath("Room2"), NodePath("Room3")]
 starting_room = NodePath("Room")
 starting_spawn_point = NodePath("Room/SpawnPoints/SpawnPoint")
+rooms = [NodePath("Room"), NodePath("Room2"), NodePath("Room3")]
 
 [node name="Room" parent="." node_paths=PackedStringArray("room_connections", "tilemap") instance=ExtResource("2_wjk5u")]
 room_connections = [NodePath("Connections/RightConnection"), NodePath("Connections/TopConnection")]

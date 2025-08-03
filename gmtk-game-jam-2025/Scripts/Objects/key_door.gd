@@ -1,18 +1,18 @@
 """
-	Project Name: Non Euclidean Puzzle Platformer
-	Team Name: Vextor Games
+	Project Name: Edge of Origin
+	Team Name: Edge of Origin Team
 	Authors: Daniel, Kyle
 	Created Date: August 2, 2023
 	Last Updated: August 3, 2023
 	Description: This class is for door that need a key to enter
 	Notes: 
-	Resoucres:
+	Resources:
 """
 
 class_name KeyDoor extends Area2D
 
 ##
-## Class Variables
+## CLASS VARIABLES
 ##
 
 #Door 

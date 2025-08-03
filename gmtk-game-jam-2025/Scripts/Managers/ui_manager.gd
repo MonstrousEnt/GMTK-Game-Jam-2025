@@ -1,30 +1,41 @@
-class_name UIManagerSingleton
-extends Control
-## Singleton for managing game UI
+"""
+	Project Name: Edge of Origin
+	Team Name: Edge of Origin Team
+	Authors: Daniel, Max
+	Created Date: July 30, 2025
+	Last Updated: August 3, 2025
+	Description: Singleton for managing game UI
+	Notes: 
+	Resources:
+"""
 
+class_name UIManagerSingleton extends Control
 
-## Whether the level map is currently being displayed
-var showing_map: bool = false
+##
+## CLASS VARIABLES
+##
 
-
+# Loading
 @onready var loading_screen: Control = %LoadingScreen
 @onready var loading_bar: ProgressBar = %LoadingProgressBar
+
+# Menus
 @onready var menus: StateMachine = %Menus
 @onready var pause_menus: StateMachine = %PauseMenus
 @onready var level_map_menu: LevelMapMenu = %LevelMapMenu
 
+## Whether the level map is currently being displayed
+var showing_map: bool = false
 
 ##
 ## BUILT IN METHODS
 ##
-
 
 func _ready() -> void:
 	_set_loading_screen_visibility()
 	_connect_signals()
 	update_pause_menus()
 	level_map_menu.visible = false
-
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("game_pause"):
@@ -37,15 +48,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			show_level_map()
 			get_viewport().set_input_as_handled()
 
-
 func _exit_tree() -> void:
 	_disconnect_signals()
 
-
 ##
-## METHODS
+## MANAGER METHODS
 ##
-
 
 ## Pause the game and show the pause menu
 func pause_game() -> void:
@@ -62,12 +70,10 @@ func pause_game() -> void:
 	pause_menus.change_state(pause_menus.initial_state)
 	update_pause_menus()
 
-
 ## Unpause the game and hide the pause menu
 func unpause_game() -> void:
 	get_tree().paused = false
 	update_pause_menus()
-
 
 ## Show the level map and pause the game
 func show_level_map() -> void:
@@ -79,13 +85,11 @@ func show_level_map() -> void:
 	level_map_menu.reset_camera_angle()
 	level_map_menu.visible = true
 
-
 ## Hide the level map and unpause the game
 func hide_level_map() -> void:
 	unpause_game()
 	showing_map = false
 	level_map_menu.visible = false
-
 
 ## Sets the level map to the current level
 func set_level_map_to_current() -> void:
@@ -94,37 +98,34 @@ func set_level_map_to_current() -> void:
 
 	level_map_menu.set_level_map_level(LevelManager.current_level)
 
-
 ## Update visibility of the pause menu
 func update_pause_menus() -> void:
 	pause_menus.visible = GameManager.in_level && get_tree().paused
 
+##
+## SIGNAL METHODS
+##
 
 func _connect_signals() -> void:
 	GameManager.loading_changed.connect(_on_loading_changed)
 	GameManager.loading_progress_changed.connect(_on_loading_progress_changed)
 	GameManager.in_level_changed.connect(_on_in_level_changed)
 
-
 func _disconnect_signals() -> void:
 	GameManager.loading_changed.disconnect(_on_loading_changed)
 	GameManager.in_level_changed.disconnect(_on_in_level_changed)
-
 
 ## Handle loading state changed
 func _on_loading_changed() -> void:
 	_set_loading_screen_visibility()
 
-
 ## Handle loading progress changed
 func _on_loading_progress_changed(progress: float) -> void:
 	loading_bar.value = progress * 100
 
-
 ## Set the visibility of the loading screen based on loading state
 func _set_loading_screen_visibility() -> void:
 	loading_screen.visible = GameManager.loading
-
 
 ## Handle in level state changed
 func _on_in_level_changed() -> void:

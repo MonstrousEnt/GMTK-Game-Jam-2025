@@ -1,18 +1,18 @@
 """
-	Project Name: Non Euclidean Puzzle Platformer
-	Team Name: Vextor Games
+	Project Name: Edge of Origin
+	Team Name: Edge of Origin Team
 	Authors: Daniel, Kyle
-	Created Date: August 2, 2023
-	Last Updated: August 3, 2023
-	Description: This is class for keys
+	Created Date: August 2, 2025
+	Last Updated: August 3, 2025
+	Description: This is class for keys.
 	Notes: 
-	Resoucres:
+	Resources:
 """
 
 class_name key extends item_data
 
 ##
-## Class Variables
+## CLASS VARIABLES
 ##
 
 # --- Resource to hold the key data (door this key unlocks) ---

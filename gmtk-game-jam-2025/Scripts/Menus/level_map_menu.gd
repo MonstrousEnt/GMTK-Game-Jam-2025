@@ -1,23 +1,34 @@
-@tool
-class_name LevelMapMenu
-extends Control
+"""
+	Project Name: Edge of Origin
+	Team Name: Edge of Origin Team
+	Authors: Daniel, Max
+	Created Date: July 30, 2025
+	Last Updated: August 3, 2025
+	Description: This is the world map ui class.
+	Notes: 
+	Resources:
+"""
 
+@tool
+class_name LevelMapMenu extends Control
+
+##
+## CLASS VARIABLES
+##
 
 ## Speed of map rotation with mouse
 @export var mouse_rotation_speed: float = 1
+
 ## Speed of map rotation with controller
 @export var controller_rotation_speed: float = 1
-
 
 @onready var exit_button: Button = %ExitButton
 @onready var camera: Camera3D = %Camera3D
 @onready var camera_pivot: Node3D = %CameraPivot
 @onready var level_map: LevelMap = %LevelMap
 
-
 ## Whether the map rotating button is currently pressed
 var is_mouse_rotating: bool = false
-
 
 @export_tool_button("Update Camera Size", "Callable") var update_action = update_camera_fit
 
@@ -26,14 +37,11 @@ var is_mouse_rotating: bool = false
 ## BUILT IN METHODS
 ##
 
-
 func _ready() -> void:
 	_connect_signals()
 
-
 func _process(_delta: float) -> void:
 	update_map_rotation()
-
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("game_toggle_map") || event.is_action_pressed("game_pause"):
@@ -41,15 +49,12 @@ func _unhandled_input(event: InputEvent) -> void:
 			UIManager.hide_level_map()
 			get_viewport().set_input_as_handled()
 
-
 func _exit_tree() -> void:
 	_disconnect_signals()
 
-
 ##
-## METHODS
+## CLASS METHODS
 ##
-
 
 func set_level_map_level(level: Level) -> void:
 	level_map.level = level
@@ -57,7 +62,6 @@ func set_level_map_level(level: Level) -> void:
 	level_map.clean_map_mesh()
 	level_map.update_map_aabb()
 	update_camera_fit()
-
 
 ## Update camera size and position to fit level map mesh
 func update_camera_fit() -> void:
@@ -76,17 +80,18 @@ func update_camera_fit() -> void:
 	camera.size = map_aab.position.distance_to(map_aab.end) + 0.25
 	camera_pivot.position = map_aab.get_center()
 
-
 ## Set rotation of camera with rotational clamping
 func set_camera_rotation(new_rotation: Vector3) -> void:
 	camera_pivot.rotation = new_rotation
 	camera_pivot.rotation_degrees.x = clamp(camera_pivot.rotation_degrees.x, -80, 80)
 
-
 ## Set camera rotation to starting angle
 func reset_camera_angle() -> void:
 	set_camera_rotation(Vector3(-PI/4, PI/4, 0))
 
+##
+## SIGNAL METHODS
+##
 
 func update_map_rotation() -> void:
 	is_mouse_rotating = Input.is_action_pressed("game_rotate_map_pc")

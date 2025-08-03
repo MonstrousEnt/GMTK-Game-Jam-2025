@@ -1,15 +1,13 @@
 """
-	Project Name: Non Euclidean Puzzle Platformer
-	Team Name: Vextor Games
+	Project Name: Edge of Origin
+	Team Name: Edge of Origin Team
 	Authors: Daniel, Kyle
 	Created Date: July 30, 2023
 	Last Updated: August 3, 2023
 	Description: This class is the controller for the player
 	Notes: 
-	Resoucres:
+	Resources:
 """
-
-# Variables to tweak in editor
 
 class_name Player extends CharacterBody2D
 
@@ -30,11 +28,9 @@ class_name Player extends CharacterBody2D
 		if is_active && player_camera != null:
 			player_camera.make_current()
 
-
 # References
 @onready var player_camera: Camera2D = %Camera
 @onready var player_anim_controller: AnimationController = %Sprite
-
 
 #Jump
 @export var jumpForce: float = 450
@@ -52,11 +48,9 @@ var jump_buffer_timer: float = 0.0
 var is_sprung: bool = false
 var spring_timer: float = 0.0
 
-
 ##
 ## BUILT IN METHODS
 ##
-
 
 func _ready() -> void:
 	if is_active:
@@ -82,7 +76,7 @@ func _physics_process(delta) -> void:
 	move_and_slide()
 
 ##
-## METHODS
+## CLASS METHODS
 ##
 
 # Apply the gravity to player
@@ -98,10 +92,10 @@ func apply_gravity(delta) -> void:
 func move_player(delta) -> void:
 	# --- HORIZONTAL MOVEMENT ---
 	var input_x = Input.get_axis("move_left", "move_right")
-
-	player_anim_controller.flip_h = input_x < 0
-		
 	var target_speed = input_x * speed
+
+	# flip the player
+	player_anim_controller.flip_h = input_x < 0
 	
 	# Accelerate and decelerate the character's velocity based on input direction.
 	if (is_on_floor()):

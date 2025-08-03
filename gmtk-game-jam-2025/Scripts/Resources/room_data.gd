@@ -1,12 +1,20 @@
+"""
+	Project Name: Edge of Origin
+	Team Name: Edge of Origin Team
+	Authors: Daniel, Max
+	Created Date: July 30, 2025
+	Last Updated: August 3, 2025
+	Description: Data for a room in a level
+	Notes: 
+	Resources:
+"""
+
 @tool
-class_name RoomData
-extends Resource
-## Data for a room in a level
+class_name RoomData extends Resource
 
-
-## Emitted when room position, rotation, or size values are changed
-signal room_data_changed
-
+##
+## SETTERS AND GETTERS
+##
 
 ## Position of room on 3D map
 @export var room_position: Vector3 = Vector3.ZERO:
@@ -26,3 +34,11 @@ signal room_data_changed
 	set(value):
 		room_size = value
 		room_data_changed.emit()
+
+
+##
+## SIGNAL VARIABLES
+##
+
+## Emitted when room position, rotation, or size values are changed
+signal room_data_changed

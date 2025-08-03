@@ -1,15 +1,19 @@
-class_name LevelManagerSingleton
-extends Node
-## Singleton for managing the state of levels
+"""
+	Project Name: Edge of Origin
+	Team Name: Edge of Origin Team
+	Authors: Daniel, Max
+	Created Date: July 30, 2025
+	Last Updated: August 3, 2025
+	Description: Singleton for managing the state of levels
+	Notes: 
+	Resources:
+"""
 
+class_name LevelManagerSingleton extends Node
 
-## Emitted when the value of level loading progress is changed
-signal level_load_progress_changed
-## Emitted when the level fails to load
-signal level_load_failed
-## Emitted when a level is loaded
-signal level_loaded
-
+##
+## CLASS VARIABLES
+##
 
 ## Player character
 @export var player: Player
@@ -19,40 +23,51 @@ var loading: bool = false
 
 ## Path to loading level
 var loading_level_path: String
+
 ## Status of level loading
 var level_load_status: ResourceLoader.ThreadLoadStatus
+
 ## Progress of level loading (0-1)
 var level_load_progress: float = 0
 
 ## Path to the current level
 var current_level_path: String
+
 ## Current level node
 var current_level: Level
 
 ## Current player rotation 
 var player_rotation: float = 0
 
+##
+## SIGNAL VARIABLES
+##
+
+## Emitted when the value of level loading progress is changed
+signal level_load_progress_changed
+
+## Emitted when the level fails to load
+signal level_load_failed
+
+## Emitted when a level is loaded
+signal level_loaded
 
 ##
 ## BUILT IN METHODS
 ##
 
-
 func _process(_delta: float) -> void:
 	_update_level_loading_status()
 
-
 ##
-## METHODS
+## MANAGER METHODS
 ##
-
 
 ## Start loading a level at a given path
 func request_load_level(path: String) -> void:
 	loading = true
 	loading_level_path = path
 	ResourceLoader.load_threaded_request(path)
-
 
 ## Unload the current level
 func unload_level() -> void:
@@ -61,7 +76,6 @@ func unload_level() -> void:
 
 	current_level.queue_free()
 	current_level_path = ""
-
 
 ## Start level gameplay
 func start_level() -> void:
@@ -83,7 +97,6 @@ func start_level() -> void:
 
 	# Make player active
 	player.is_active = true
-
 
 func change_room(room_connection: RoomConnection) -> void:
 	if room_connection.room == null:
@@ -116,7 +129,6 @@ func change_room(room_connection: RoomConnection) -> void:
 
 	# Reactivate player
 	player.is_active = true
-
 
 ## Update the player cameras limits to be inside the current room
 func update_player_camera_limits() -> void:
@@ -153,6 +165,9 @@ func update_player_camera_limits() -> void:
 	# 	player.player_camera.limit_top -= int(ceil(size_diff / 2))
 	# 	player.player_camera.limit_bottom += int(ceil(size_diff / 2))
 
+##
+## SIGNAL METHODS
+##
 
 ## Update the status of level loading
 func _update_level_loading_status() -> void:

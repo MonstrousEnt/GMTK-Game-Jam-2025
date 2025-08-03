@@ -1,10 +1,19 @@
-class_name StateMachine
-extends Node
-# A generic state machine for handling states
+"""
+	Project Name: Edge of Origin
+	Team Name: Edge of Origin Team
+	Authors: Daniel, Max
+	Created Date: July 30, 2025
+	Last Updated: August 3, 2025
+	Description: A generic state machine for handling states.
+	Notes: 
+	Resources:
+"""
 
+class_name StateMachine extends Node
 
-signal state_changed
-
+##
+## CLASS VARIABLES
+##
 
 @export var initial_state: State
 @export var auto_start: bool = false
@@ -12,6 +21,12 @@ signal state_changed
 var started: bool = false
 var current_state: State
 var states: Dictionary[String, State] = {}
+
+##
+## SIGNAL VARIABLES
+##
+
+signal state_changed
 
 #
 # BUILT IN METHODS
@@ -22,13 +37,11 @@ func _ready():
 	if auto_start:
 		start()
 
-
 func _process(delta):
 	if not current_state:
 		return
 	
 	current_state.update(delta)
-
 
 func _physics_process(delta):
 	if not current_state:
@@ -36,13 +49,11 @@ func _physics_process(delta):
 	
 	current_state.physics_update(delta)
 
-
 func _input(event):
 	if not current_state:
 		return
 	
 	current_state.input(event)
-
 
 func _unhandled_input(event):
 	if not current_state:
@@ -51,15 +62,13 @@ func _unhandled_input(event):
 	current_state.unhandled_input(event)
 
 #
-# METHODS
+# CLASS METHODS
 #
-
 
 ## Start the state machine and enter the first state
 func start() -> void:
 	change_state(initial_state)
 	started = true
-
 
 ## Change the current state to a new state
 func change_state(new_state: State) -> void:
@@ -74,6 +83,9 @@ func change_state(new_state: State) -> void:
 
 	state_changed.emit()
 
+##
+## SIGNAL METHODS
+##
 
 ## Get all child state nodes and connect transition signal
 func _init_child_states() -> Dictionary[String, State]:
@@ -85,7 +97,6 @@ func _init_child_states() -> Dictionary[String, State]:
 			child.Transitioned.connect(_on_child_transition)
 	
 	return child_states
-
 
 ## Handle transition between states
 func _on_child_transition(state: State, new_state: State):

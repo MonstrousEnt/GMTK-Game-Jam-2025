@@ -1,7 +1,34 @@
-@tool
-class_name LevelMap
-extends Node3D
+"""
+	Project Name: Edge of Origin
+	Team Name: Edge of Origin Team
+	Authors: Daniel, Max
+	Created Date: July 30, 2025
+	Last Updated: August 3, 2025
+	Description: This is class render the 3d level map.
+	Notes: 
+	Resources:
+"""
 
+@tool
+class_name LevelMap extends Node3D
+
+##
+## CLASS VARIABLES
+##
+
+## Material applied to room meshes
+@export var room_material: StandardMaterial3D
+
+@export_tool_button("Build Level Map", "Callable") var build_map_action = _on_build_map_pressed
+
+var room_meshes: Dictionary[StringName, MeshInstance3D] = {}
+
+## Axis aligned bounding box of all room meshes combined
+var meshes_aabb: AABB
+
+##
+## SETTERS AND GETTERS
+##
 
 @export var level: Level:
 	set(value):
@@ -10,16 +37,6 @@ extends Node3D
 		level = value
 		_connect_room_data_signals()
 		_connect_level_data_signals()
-
-## Material applied to room meshes
-@export var room_material: StandardMaterial3D
-
-@export_tool_button("Build Level Map", "Callable") var build_map_action = _on_build_map_pressed
-
-
-var room_meshes: Dictionary[StringName, MeshInstance3D] = {}
-## Axis aligned bounding box of all room meshes combined
-var meshes_aabb: AABB
 
 
 ##
@@ -36,11 +53,9 @@ func _exit_tree() -> void:
 	_disconnect_room_data_signals()
 	_disconnect_level_data_signals()
 
-
 ##
-## METHODS
+## CLASS METHODS
 ##
-
 
 ## Create mesh for map from level data
 func build_map_mesh() -> void:
@@ -59,7 +74,6 @@ func build_map_mesh() -> void:
 		else:
 			var mesh = create_room_mesh(room_data)
 			room_meshes[room_data.resource_path] = mesh
-
 
 ## Create a mesh instance from room data
 func create_room_mesh(room_data: RoomData) -> MeshInstance3D:
@@ -86,13 +100,11 @@ func create_room_mesh(room_data: RoomData) -> MeshInstance3D:
 
 	return mesh_instance
 
-
 # Remove any mesh instances for rooms that are not in level data
 func clean_map_mesh() -> void:
 	for key in room_meshes.keys():
 		if level.level_data.room_data.find_custom(func(room_data): return room_data.resource_path == key) == -1:
 			room_meshes[key].queue_free()
-
 
 func update_map_aabb() -> void:
 	if room_meshes == null || room_meshes.size() == 0:
@@ -114,8 +126,9 @@ func update_map_aabb() -> void:
 	var combined_mesh = st.commit()
 	meshes_aabb = combined_mesh.get_aabb()
 
-
-
+##
+## SIGNAL METHODS
+##
 
 ## Connect level data signals
 func _connect_level_data_signals() -> void:
@@ -125,7 +138,6 @@ func _connect_level_data_signals() -> void:
 	if !level.level_data.room_data_changed.is_connected(_on_level_room_data_changed):
 		level.level_data.room_data_changed.connect(_on_level_room_data_changed)
 
-
 ## Disconnect level data signals
 func _disconnect_level_data_signals() -> void:
 	if level == null || level.level_data == null:
@@ -134,7 +146,6 @@ func _disconnect_level_data_signals() -> void:
 	if level.level_data.room_data_changed.is_connected(_on_level_room_data_changed):
 		level.level_data.room_data_changed.disconnect(_on_level_room_data_changed)
 	
-
 ## Connect to all level room data signals
 func _connect_room_data_signals() -> void:
 	if level == null || level.level_data == null || level.level_data.room_data == null:
@@ -144,7 +155,6 @@ func _connect_room_data_signals() -> void:
 		if !room_data.room_data_changed.is_connected(_on_room_data_changed):
 			room_data.room_data_changed.connect(_on_room_data_changed)
 
-
 ## Disconnect to all room data signals
 func _disconnect_room_data_signals() -> void:
 	if level == null || level.level_data == null || level.level_data.room_data == null:
@@ -153,7 +163,6 @@ func _disconnect_room_data_signals() -> void:
 	for room_data in level.level_data.room_data:
 		if room_data.room_data_changed.is_connected(_on_room_data_changed):
 			room_data.room_data_changed.disconnect(_on_room_data_changed)
-
 
 ## Handle level room data changed
 func _on_level_room_data_changed() -> void:
@@ -169,7 +178,6 @@ func _on_level_room_data_changed() -> void:
 func _on_room_data_changed() -> void:
 	build_map_mesh()
 	update_map_aabb()
-
 
 ## Handle build map button pressed
 func _on_build_map_pressed() -> void:

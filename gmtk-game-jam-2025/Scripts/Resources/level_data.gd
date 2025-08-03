@@ -1,18 +1,27 @@
+"""
+	Project Name: Edge of Origin
+	Team Name: Edge of Origin Team
+	Authors: Daniel, Max
+	Created Date: July 30, 2025
+	Last Updated: August 3, 2025
+	Description: This is the data class for level.
+	Notes: 
+	Resources:
+"""
+
 @tool
-class_name LevelData
-extends Resource
+class_name LevelData extends Resource
 
-
-## Emitted when value of level unlocked is changed
-signal level_unlocked_changed
-## Emitted when value of level completed is changed
-signal level_completed_changed
-## Emitted when value room of room data is changed
-signal room_data_changed
-
+##
+## CLASS VARIABLES
+##
 
 ## Path to level scene
 @export_file("*.tscn") var level_scene_path: String
+
+##
+## SETTERS AND GETTERS
+##
 
 ## Whether this level is unlocked
 @export var unlocked: bool = false: 
@@ -33,3 +42,16 @@ signal room_data_changed
 	set(value):
 		room_data = value
 		room_data_changed.emit()
+
+##
+## SIGNAL VARIABLES
+##
+
+## Emitted when value of level unlocked is changed
+signal level_unlocked_changed
+
+## Emitted when value of level completed is changed
+signal level_completed_changed
+
+## Emitted when value room of room data is changed
+signal room_data_changed
