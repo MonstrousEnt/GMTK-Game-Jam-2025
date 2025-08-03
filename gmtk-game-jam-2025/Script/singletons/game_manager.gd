@@ -29,6 +29,9 @@ var in_level: bool = false:
 @export var levels: Array[LevelData]
 
 
+@onready var audio_stream_player: AudioStreamPlayer = %AudioStreamPlayer
+
+
 ##
 ## BUILT IN METHODS
 ##
@@ -36,6 +39,7 @@ var in_level: bool = false:
 
 func _ready() -> void:
 	_connect_signals()
+	audio_stream_player.play()
 
 
 func _exit_tree() -> void:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://drx4tbuwxwao"]
+[gd_scene load_steps=20 format=4 uid="uid://drx4tbuwxwao"]
 
 [ext_resource type="Script" uid="uid://dq1t7xwuevrym" path="res://Script/level/level.gd" id="1_dga24"]
 [ext_resource type="Resource" uid="uid://dlj1bebwbir2n" path="res://assets/resources/level_data/level_1/level_1.tres" id="2_dga24"]
@@ -10,6 +10,7 @@
 [ext_resource type="Resource" uid="uid://cy7qltle62xmd" path="res://assets/resources/level_data/level_1/room_1.tres" id="8_excbq"]
 [ext_resource type="Resource" uid="uid://c0qnh6vsfianh" path="res://assets/resources/level_data/level_1/room_3.tres" id="9_dga24"]
 [ext_resource type="PackedScene" uid="uid://djguwrd1ch8xf" path="res://scenes/level/level_exit.tscn" id="9_qxy0u"]
+[ext_resource type="Resource" uid="uid://dga0a2r7j22d" path="res://assets/resources/level_data/level_0/room_2.tres" id="10_excbq"]
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_6ayib"]
 viewport_path = NodePath("SubViewport")
@@ -35,7 +36,7 @@ viewport_path = NodePath("SubViewport")
 [sub_resource type="ViewportTexture" id="ViewportTexture_dga24"]
 viewport_path = NodePath("SubViewport")
 
-[node name="Level0" type="Node2D" node_paths=PackedStringArray("rooms", "starting_room", "starting_spawn_point")]
+[node name="Level1" type="Node2D" node_paths=PackedStringArray("rooms", "starting_room", "starting_spawn_point")]
 script = ExtResource("1_dga24")
 level_data = ExtResource("2_dga24")
 rooms = [NodePath("Room"), NodePath("Room2"), NodePath("Room3"), NodePath("Room4")]
@@ -128,7 +129,7 @@ rotation = -1.57079
 position = Vector2(1016, 993)
 room_connections = [NodePath("Connections/LeftConnection"), NodePath("Connections/TopConnection"), NodePath("Connections/BottomConnection2")]
 tilemap = NodePath("TileMapLayer")
-room_data = ExtResource("9_dga24")
+room_data = ExtResource("10_excbq")
 viewport_texture = SubResource("ViewportTexture_p6rmu")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="Room3"]
