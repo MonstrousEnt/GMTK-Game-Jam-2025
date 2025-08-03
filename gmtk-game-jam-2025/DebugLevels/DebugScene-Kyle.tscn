@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bj46ihnf55nem"]
+[gd_scene load_steps=27 format=3 uid="uid://bj46ihnf55nem"]
 
 [ext_resource type="Script" uid="uid://vrp1dukmiq17" path="res://Script/Player/PlayerController.gd" id="1_2be4l"]
 [ext_resource type="Texture2D" uid="uid://dx8om2ecwbj7c" path="res://icon.svg" id="2_3mwrl"]
@@ -14,6 +14,7 @@
 [ext_resource type="PackedScene" uid="uid://dgwcl5odvkmeb" path="res://Prefabs/passcode.tscn" id="12_fv6mm"]
 [ext_resource type="Script" uid="uid://sewtyilslknk" path="res://Script/Objects/hazard.gd" id="13_dviqd"]
 [ext_resource type="Texture2D" uid="uid://b0x30jyi70ull" path="res://Sprites/Placeholder/spike_placeholder.png" id="14_fv6mm"]
+[ext_resource type="AudioStream" uid="uid://du8mbhlm1rkp7" path="res://Audio/SFX/SFX_Hit.wav" id="15_fv6mm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_876be"]
 atlas = ExtResource("4_3pjhv")
@@ -194,6 +195,11 @@ texture = ExtResource("14_fv6mm")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Spike"]
 polygon = PackedVector2Array(0, -17, 16, 18, -16, 18)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Spike"]
+position = Vector2(-290, -586)
+stream = ExtResource("15_fv6mm")
+playback_type = 1
 
 [connection signal="body_entered" from="Player/ItemPickupArea" to="Player" method="_on_item_pickup_area_body_entered"]
 [connection signal="body_entered" from="Player/ItemPickupArea" to="Player/ItemManager" method="_on_item_pickup_area_body_entered"]
