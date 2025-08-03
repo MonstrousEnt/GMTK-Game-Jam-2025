@@ -17,19 +17,10 @@ config/icon="res://assets/textures/icon.svg"
 
 [autoload]
 
+InventoryManager="*res://Script/Managers/inventory_manager.gd"
 LevelManager="*res://scenes/singletons/level_manager.tscn"
 GameManager="*res://scenes/singletons/game_manager.tscn"
 UIManager="*res://scenes/singletons/ui_manager.tscn"
-
-[layer_names]
-
-2d_physics/layer_1="player"
-2d_physics/layer_2="terrain"
-2d_physics/layer_3="hazards"
-
-[autoload]
-
-InventoryManager="*res://Script/Managers/inventory_manager.gd"
 
 [input]
 
@@ -109,7 +100,6 @@ use_item={
 2d_physics/layer_1="player"
 2d_physics/layer_2="terrain"
 2d_physics/layer_3="hazards"
-
 
 [rendering]
 

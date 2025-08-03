@@ -1,10 +1,13 @@
-[gd_scene load_steps=5 format=3 uid="uid://xy4iq88w5vq3"]
+[gd_scene load_steps=6 format=3 uid="uid://xy4iq88w5vq3"]
 
 [ext_resource type="Script" uid="uid://vrp1dukmiq17" path="res://Script/Player/PlayerController.gd" id="1_617v1"]
-[ext_resource type="SpriteFrames" uid="uid://qskoxj8pi025" path="res://assets/resources/player_sprite_frames.tres" id="2_1txc5"]
+[ext_resource type="SpriteFrames" uid="uid://vsst0wreebjb" path="res://assets/resources/player_sprite_frames.tres" id="2_1txc5"]
 [ext_resource type="Script" uid="uid://c77oddhm0ylxd" path="res://Script/Player/PlayerAnimController.gd" id="4_rpba7"]
-[ext_resource type="Script" uid="uid://cd74gdajmdfpu" path="res://Script/Managers/inventory_manager.gd" id="7_m2qjg"]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y00gc"]
+size = Vector2(12, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ffy13"]
 size = Vector2(12, 40)
 
 [node name="Player" type="CharacterBody2D"]
@@ -22,21 +25,13 @@ sprite_frames = ExtResource("2_1txc5")
 animation = &"idle"
 script = ExtResource("4_rpba7")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="PlayerCollision" type="CollisionShape2D" parent="."]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_y00gc")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ffy13"]
-size = Vector2(12, 40)
+[node name="PlayerItemPickupArea" type="Area2D" parent="."]
 
-[node name="ItemPickupArea" type="Area2D" parent="Player"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/ItemPickupArea"]
+[node name="ItemPickupCollision" type="CollisionShape2D" parent="PlayerItemPickupArea"]
 position = Vector2(169.667, 530)
 scale = Vector2(1, 1.00902)
 shape = SubResource("RectangleShape2D_ffy13")
-
-[node name="InventorySystem" type="Node2D" parent="Player"]
-script = ExtResource("7_m2qjg")
-
-[connection signal="body_entered" from="Player/ItemPickupArea" to="Player" method="_on_item_pickup_area_body_entered"]

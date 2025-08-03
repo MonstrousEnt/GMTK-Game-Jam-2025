@@ -52,11 +52,6 @@ var jump_buffer_timer: float = 0.0
 var is_sprung: bool = false
 var spring_timer: float = 0.0
 
-# References
-@onready var player_anim_controller = $"AnimatedSprite2D"
-@onready var input_manager = $"InputManager"
-@onready var item_manager = $"ItemManager"
-
 
 ##
 ## BUILT IN METHODS
@@ -133,7 +128,7 @@ func jump(delta) -> void:
 		# Start the timer to countdown every frame jump was not pressed.
 		jump_buffer_timer -= delta
 		
-		if (input_manager.is_action_just_pressed("use_item")):
+		if (Input.is_action_just_pressed("use_item")):
 			InventoryManager.use_item(0)
 			
 	# --- EXECUTE JUMP ---
