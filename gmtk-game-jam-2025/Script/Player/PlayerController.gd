@@ -139,6 +139,8 @@ func jump(delta) -> void:
 
 		player_anim_controller.play("air")
 
+		$AudioStreamPlayer2D.play()
+
 		# Reset the timers to prevent double jumps.
 		coyote_timer = 0
 		jump_buffer_timer = 0
