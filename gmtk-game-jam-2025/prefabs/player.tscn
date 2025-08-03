@@ -1,10 +1,20 @@
-[gd_scene load_steps=12 format=3 uid="uid://xy4iq88w5vq3"]
+[gd_scene load_steps=30 format=3 uid="uid://xy4iq88w5vq3"]
 
 [ext_resource type="Script" uid="uid://vrp1dukmiq17" path="res://Script/Player/PlayerController.gd" id="1_617v1"]
 [ext_resource type="Texture2D" uid="uid://bi73bgfo5lj6y" path="res://Sprites/Placeholder/placeholder_idle.png" id="2_k7aqk"]
 [ext_resource type="Texture2D" uid="uid://dishd4vr77cgq" path="res://Sprites/Placeholder/placeholder_alien.png" id="3_udifs"]
 [ext_resource type="Script" uid="uid://c77oddhm0ylxd" path="res://Script/Player/PlayerAnimController.gd" id="4_rpba7"]
 [ext_resource type="Script" uid="uid://dnjw665d0a14v" path="res://Script/Managers/input_manager.gd" id="5_43tkh"]
+[ext_resource type="Script" uid="uid://cd74gdajmdfpu" path="res://Script/Managers/inventory_manager.gd" id="7_m2qjg"]
+[ext_resource type="Texture2D" uid="uid://dx8om2ecwbj7c" path="res://icon.svg" id="7_sd3sa"]
+[ext_resource type="Script" uid="uid://bguyxunwjsg3q" path="res://Script/Obstacles/spring_controller.gd" id="8_m2qjg"]
+[ext_resource type="Texture2D" uid="uid://cctfi6camdrbj" path="res://Sprites/Placeholder/spring_placeholder.png" id="9_llb5v"]
+[ext_resource type="Script" uid="uid://bwhh8x868cvqj" path="res://Script/pickup.gd" id="10_x0bak"]
+[ext_resource type="Texture2D" uid="uid://dgsbgvwcy7dtk" path="res://Sprites/Placeholder/key_placeholder.png" id="11_lulei"]
+[ext_resource type="Script" uid="uid://djuopivdrab4u" path="res://Script/key_door.gd" id="12_sd3sa"]
+[ext_resource type="Script" uid="uid://d106vmkqjw0gd" path="res://code_door.gd" id="13_m2qjg"]
+[ext_resource type="Script" uid="uid://ufxwhd47ytup" path="res://passcode.gd" id="14_x0bak"]
+[ext_resource type="Texture2D" uid="uid://bd72vw4q8ttec" path="res://Sprites/Placeholder/passcode_placeholder.png" id="15_lulei"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_876be"]
 atlas = ExtResource("3_udifs")
@@ -32,7 +42,10 @@ animations = [{
 "name": &"idle",
 "speed": 5.0
 }, {
-"frames": [],
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_k7aqk")
+}],
 "loop": true,
 "name": &"jump",
 "speed": 5.0
@@ -58,19 +71,178 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y00gc"]
 size = Vector2(21, 33)
 
-[node name="Player" type="CharacterBody2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ffy13"]
+size = Vector2(19, 32.0443)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3mwrl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3mwrl"]
+size = Vector2(126.667, 118.634)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dkv6e"]
+size = Vector2(66, 27)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_yymet"]
+size = Vector2(27, 55)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m2qjg"]
+size = Vector2(41.9999, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_llb5v"]
+size = Vector2(127.273, 128.571)
+
+[sub_resource type="Resource" id="Resource_edtk3"]
+script = ExtResource("14_x0bak")
+passcode = 1234
+item_name = "passcode"
+item_id = 0
+metadata/_custom_type_script = "uid://ufxwhd47ytup"
+
+[node name="MainScene" type="Node"]
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(-421, -1049)
 scale = Vector2(3, 3)
 script = ExtResource("1_617v1")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
 position = Vector2(169, 530)
 sprite_frames = SubResource("SpriteFrames_gju3c")
-animation = &"walk"
+animation = &"jump"
 script = ExtResource("4_rpba7")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+visible = false
 position = Vector2(169.5, 529.5)
 shape = SubResource("RectangleShape2D_y00gc")
 
-[node name="InputManager" type="Node2D" parent="."]
+[node name="InputManager" type="Node2D" parent="Player"]
 script = ExtResource("5_43tkh")
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(330.667, 519)
+scale = Vector2(0.333333, 0.333333)
+
+[node name="ItemPickupArea" type="Area2D" parent="Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/ItemPickupArea"]
+position = Vector2(169.667, 530)
+scale = Vector2(1, 1.00902)
+shape = SubResource("RectangleShape2D_ffy13")
+
+[node name="InventorySystem" type="Node2D" parent="Player"]
+script = ExtResource("7_m2qjg")
+
+[node name="TestFloor" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="TestFloor"]
+position = Vector2(576, 628.5)
+scale = Vector2(9, 0.320313)
+texture = ExtResource("7_sd3sa")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="TestFloor/Sprite2D"]
+physics_material_override = SubResource("PhysicsMaterial_3mwrl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestFloor/Sprite2D/StaticBody2D"]
+position = Vector2(0.33334, -4.68286)
+shape = SubResource("RectangleShape2D_3mwrl")
+
+[node name="Spring" type="Area2D" parent="."]
+position = Vector2(1093, 524)
+rotation = -1.5708
+script = ExtResource("8_m2qjg")
+spring_power = 1200
+
+[node name="Sprite2D" type="Sprite2D" parent="Spring"]
+scale = Vector2(3, 3)
+texture = ExtResource("9_llb5v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spring"]
+position = Vector2(0, -13.5)
+shape = SubResource("RectangleShape2D_dkv6e")
+
+[node name="Spring2" type="Area2D" parent="."]
+position = Vector2(544, 559)
+script = ExtResource("8_m2qjg")
+spring_power = 600
+spring_duration = 0.0
+
+[node name="Sprite2D" type="Sprite2D" parent="Spring2"]
+scale = Vector2(3, 3)
+texture = ExtResource("9_llb5v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spring2"]
+position = Vector2(0, -13.5)
+shape = SubResource("RectangleShape2D_dkv6e")
+
+[node name="Spring3" type="Area2D" parent="."]
+position = Vector2(51, 443)
+rotation = 1.06291
+script = ExtResource("8_m2qjg")
+spring_power = 1200
+
+[node name="Sprite2D" type="Sprite2D" parent="Spring3"]
+scale = Vector2(3, 3)
+texture = ExtResource("9_llb5v")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Spring3"]
+position = Vector2(0, -13.5)
+shape = SubResource("RectangleShape2D_dkv6e")
+
+[node name="Key" type="Area2D" parent="." groups=["pickup"]]
+position = Vector2(343, 559)
+script = ExtResource("10_x0bak")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Key"]
+position = Vector2(22.5, 17.5)
+shape = SubResource("RectangleShape2D_yymet")
+
+[node name="Sprite2D" type="Sprite2D" parent="Key"]
+position = Vector2(22, 22.5)
+scale = Vector2(2.375, 2.25)
+texture = ExtResource("11_lulei")
+
+[node name="Door" type="Area2D" parent="."]
+position = Vector2(973, 524)
+script = ExtResource("12_sd3sa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door"]
+position = Vector2(-3, 3)
+shape = SubResource("RectangleShape2D_m2qjg")
+
+[node name="Sprite2D" type="Sprite2D" parent="Door"]
+position = Vector2(-2, 5)
+scale = Vector2(0.335938, 0.757813)
+texture = ExtResource("7_sd3sa")
+
+[node name="Area2D" type="Area2D" parent="Door"]
+
+[node name="CodeDoor" type="Area2D" parent="."]
+position = Vector2(795, 552)
+scale = Vector2(0.44, 0.840002)
+script = ExtResource("13_m2qjg")
+
+[node name="Sprite2D" type="Sprite2D" parent="CodeDoor"]
+scale = Vector2(1, 1)
+texture = ExtResource("7_sd3sa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CodeDoor"]
+position = Vector2(0, -2.38102)
+scale = Vector2(1, 1)
+shape = SubResource("RectangleShape2D_llb5v")
+
+[node name="Passcode" type="Area2D" parent="."]
+script = ExtResource("10_x0bak")
+item_data_resource = SubResource("Resource_edtk3")
+
+[node name="Sprite2D" type="Sprite2D" parent="Passcode"]
+position = Vector2(651, 579)
+texture = ExtResource("15_lulei")
+
+[connection signal="body_entered" from="Player/ItemPickupArea" to="Player" method="_on_item_pickup_area_body_entered"]
+[connection signal="body_entered" from="Spring" to="Spring" method="_on_body_entered"]
+[connection signal="body_entered" from="Spring2" to="Spring2" method="_on_body_entered"]
+[connection signal="body_entered" from="Spring3" to="Spring3" method="_on_body_entered"]
+[connection signal="body_entered" from="Key" to="Key" method="_on_body_entered"]
+[connection signal="body_entered" from="Door" to="Door" method="_on_body_entered"]
+[connection signal="body_entered" from="CodeDoor" to="CodeDoor" method="_on_body_entered"]

@@ -7,7 +7,8 @@ var input_map = {
 	# Commented out for now, until we actually have rotating camera.
 	#"move_up": [KEY_W, KEY_UP, "dpad_up"],
 	#"move_down": [KEY_S, KEY_DOWN, "dpad_down"],
-	"jump": [KEY_SPACE, "A"]
+	"jump": [KEY_SPACE, "A"],
+	"use_item": [KEY_TAB, "X"]
 }
 
 #--- Handle if an action was just released ---
@@ -27,7 +28,7 @@ func is_action_pressed(action_name: String) -> bool:
 					return true
 			elif input is String:
 				var joy_button = _get_joy_button_from_string(input)
-				if Input.is_joy_button_pressed(0, _get_joy_button_from_string(input)):
+				if Input.is_joy_button_pressed(0, joy_button):
 					return true
 	return false
 
@@ -36,11 +37,11 @@ func is_action_just_pressed(action_name: String) -> bool:
 	if input_map.has(action_name):
 		for input in input_map[action_name]:
 			if input is int:
-				if Input.is_key_pressed(input):
+				if Input.is_action_just_pressed(action_name):
 					return true
 				elif input is String:
 					var joy_button = _get_joy_button_from_string(input)
-					if input.is_joy_button_pressed(0, _get_joy_button_from_string(input)):
+					if input.is_joy_button_pressed(0, joy_button):
 						return true
 	return false
 

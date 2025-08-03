@@ -16,6 +16,7 @@ extends CharacterBody2D
 # References
 @onready var player_anim_controller = $"AnimatedSprite2D"
 @onready var input_manager = $"InputManager"
+@onready var item_manager = $"ItemManager"
 
 var coyote_timer: float = 0.0
 var jump_buffer_timer: float = 0.0
@@ -86,7 +87,9 @@ func jump(delta) -> void:
 	else:
 		# Start the timer to countdown every frame jump was not pressed.
 		jump_buffer_timer -= delta
-	
+		
+		if input_manager.is_action_just_pressed("use_item"):
+			InventoryManager.use_item(0)
 	# --- EXECUTE JUMP ---
 	# Coyote time is used here so if a jump is executed just before landing
 	# we accept the jump. More forgiving that way.
