@@ -20,7 +20,7 @@ class_name CodeDoor extends Area2D
 var code_index: int = 0
 var correct_code: Array = ["1", "2", "3", "4"]
 
-#player
+#Player
 var player_in_area: bool = false
 
 ##
