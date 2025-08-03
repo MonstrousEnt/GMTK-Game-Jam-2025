@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=6 format=3 uid="uid://q6y0ni4oq71d"]
+
+[ext_resource type="Script" uid="uid://bb60a30xsl0h1" path="res://Scripts/Resources/room_data.gd" id="1_rpd6l"]
+[ext_resource type="Resource" uid="uid://dkqeg77csdilx" path="res://Resources/LevelData/level_0/room_0.tres" id="1_tug42"]
+[ext_resource type="Resource" uid="uid://dvkjjgqs5o1lg" path="res://Resources/LevelData/level_0/room_1.tres" id="2_rpd6l"]
+[ext_resource type="Resource" uid="uid://dga0a2r7j22d" path="res://Resources/LevelData/level_0/room_2.tres" id="3_86fo3"]
+[ext_resource type="Script" uid="uid://bh0apdh8prcyk" path="res://Scripts/Resources/level_data.gd" id="4_3kma7"]
+
+[resource]
+script = ExtResource("4_3kma7")
+level_scene_path = "uid://b0awhb1p4ka54"
+unlocked = true
+completed = false
+room_data = Array[ExtResource("1_rpd6l")]([ExtResource("1_tug42"), ExtResource("2_rpd6l"), ExtResource("3_86fo3")])
+metadata/_custom_type_script = "uid://bh0apdh8prcyk"

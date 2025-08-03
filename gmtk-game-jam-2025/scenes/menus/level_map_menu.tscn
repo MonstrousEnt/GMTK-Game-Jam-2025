@@ -1,0 +1,92 @@
+[gd_scene load_steps=4 format=3 uid="uid://btsqgp050vh2o"]
+
+[ext_resource type="PackedScene" uid="uid://bhe85q52hqmlr" path="res://Scenes/Rooms/level_map.tscn" id="1_ag8h7"]
+[ext_resource type="Script" uid="uid://brngddt45lsy5" path="res://Scripts/Menus/level_map_menu.gd" id="1_drduy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ag8h7"]
+resource_local_to_scene = true
+cull_mode = 2
+shading_mode = 2
+
+[node name="LevelMapMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_drduy")
+mouse_rotation_speed = 0.1
+controller_rotation_speed = 0.1
+
+[node name="MapBackground" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.132207, 0.143508, 0.185619, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[font_size=32]Level Map[/font_size]"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="MarginContainer/VBoxContainer/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(2, 2)
+render_target_update_mode = 4
+
+[node name="LevelMap" parent="MarginContainer/VBoxContainer/SubViewportContainer/SubViewport" instance=ExtResource("1_ag8h7")]
+unique_name_in_owner = true
+room_material = SubResource("StandardMaterial3D_ag8h7")
+
+[node name="CameraPivot" type="Node3D" parent="MarginContainer/VBoxContainer/SubViewportContainer/SubViewport"]
+unique_name_in_owner = true
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 0, 0)
+
+[node name="Camera3D" type="Camera3D" parent="MarginContainer/VBoxContainer/SubViewportContainer/SubViewport/CameraPivot"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2)
+projection = 1
+size = 2.73205
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="MarginContainer/VBoxContainer/SubViewportContainer/SubViewport/CameraPivot/Camera3D"]
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+bbcode_enabled = true
+text = "[i]Left Mouse: Rotate  [/i]|[i]  Right Stick: Rotate[/i]"
+fit_content = true
+
+[node name="ExitButton" type="Button" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+text = "< Exit"
