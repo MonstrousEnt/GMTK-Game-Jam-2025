@@ -1,7 +1,7 @@
 """
 	Project Name: Non Euclidean Puzzle Platformer
 	Team Name: Vextor Games
-	Authors: Daniel Cox
+	Authors: Daniel, Kyle
 	Created Date: July 30, 2023
 	Last Updated: August 3, 2023
 	Description: This class is the controller for the player
