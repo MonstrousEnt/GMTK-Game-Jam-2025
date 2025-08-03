@@ -12,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://bd6aku4fiptv0" path="res://Prefabs/key_door.tscn" id="10_f837q"]
 [ext_resource type="PackedScene" uid="uid://dg8bmyb83f5j3" path="res://Prefabs/code_door.tscn" id="11_dviqd"]
 [ext_resource type="PackedScene" uid="uid://dgwcl5odvkmeb" path="res://Prefabs/passcode.tscn" id="12_fv6mm"]
-[ext_resource type="Script" uid="uid://sewtyilslknk" path="res://Script/Objects/hazard.gd" id="13_dviqd"]
+[ext_resource type="Script" path="res://Script/Objects/hazard.gd" id="13_dviqd"]
 [ext_resource type="Texture2D" uid="uid://b0x30jyi70ull" path="res://Sprites/Placeholder/spike_placeholder.png" id="14_fv6mm"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_876be"]
