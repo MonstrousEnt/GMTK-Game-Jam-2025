@@ -13,14 +13,14 @@ config_version=5
 config/name="GMTK Game Jam 2025"
 run/main_scene="uid://drq1c50sf8x7f"
 config/features=PackedStringArray("4.4", "Forward Plus")
-config/icon="res://assets/textures/icon.svg"
+config/icon="res://Artwork/Textures/icon.svg"
 
 [autoload]
 
-InventoryManager="*res://Script/Managers/inventory_manager.gd"
-LevelManager="*res://scenes/singletons/level_manager.tscn"
-GameManager="*res://scenes/singletons/game_manager.tscn"
-UIManager="*res://scenes/singletons/ui_manager.tscn"
+InventoryManager="*res://Scripts/Managers/inventory_manager.gd"
+LevelManager="*res://Scenes/Game Managers/level_manager.tscn"
+GameManager="*res://Scenes/Game Managers/game_manager.tscn"
+UIManager="*res://Scenes/Game Managers/ui_manager.tscn"
 
 [input]
 

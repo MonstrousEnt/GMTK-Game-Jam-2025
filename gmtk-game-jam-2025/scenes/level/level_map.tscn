@@ -1,8 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://bhe85q52hqmlr"]
-
-[ext_resource type="Script" uid="uid://dbp2xjqteag6t" path="res://Script/menus/level_map.gd" id="1_8w8w6"]
-[ext_resource type="Material" uid="uid://epn1un5ljgn0" path="res://assets/resources/materials/room_material.tres" id="2_1t4m0"]
-
-[node name="LevelMap" type="Node3D"]
-script = ExtResource("1_8w8w6")
-room_material = ExtResource("2_1t4m0")

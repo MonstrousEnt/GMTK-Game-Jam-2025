@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://g5b0c632t2s1"]
 
-[ext_resource type="Script" uid="uid://diyr1dta77tyr" path="res://Script/menus/main_menu.gd" id="1_xqga4"]
+[ext_resource type="Script" uid="uid://diyr1dta77tyr" path="res://Scripts/Menus/main_menu.gd" id="1_xqga4"]
 
 [node name="Main Menu" type="Control" node_paths=PackedStringArray("enter_focus")]
 layout_mode = 3

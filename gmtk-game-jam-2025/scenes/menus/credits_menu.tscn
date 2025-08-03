@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bl8d1ibrjuwfu"]
 
-[ext_resource type="Script" uid="uid://be18qdbwovaoq" path="res://Script/menus/credits_menu.gd" id="1_due5w"]
+[ext_resource type="Script" uid="uid://be18qdbwovaoq" path="res://Scripts/Menus/credits_menu.gd" id="1_due5w"]
 
 [node name="CreditsMenu" type="Control" node_paths=PackedStringArray("enter_focus")]
 layout_mode = 3

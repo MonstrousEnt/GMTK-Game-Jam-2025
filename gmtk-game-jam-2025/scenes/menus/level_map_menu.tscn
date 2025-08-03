@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://btsqgp050vh2o"]
 
-[ext_resource type="PackedScene" uid="uid://bhe85q52hqmlr" path="res://scenes/level/level_map.tscn" id="1_ag8h7"]
-[ext_resource type="Script" uid="uid://brngddt45lsy5" path="res://Script/menus/level_map_menu.gd" id="1_drduy"]
+[ext_resource type="PackedScene" uid="uid://bhe85q52hqmlr" path="res://Scenes/Rooms/level_map.tscn" id="1_ag8h7"]
+[ext_resource type="Script" uid="uid://brngddt45lsy5" path="res://Scripts/Menus/level_map_menu.gd" id="1_drduy"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ag8h7"]
 resource_local_to_scene = true

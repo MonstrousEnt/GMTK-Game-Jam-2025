@@ -1,0 +1,182 @@
+[gd_scene load_steps=26 format=3 uid="uid://bj46ihnf55nem"]
+
+[ext_resource type="Script" uid="uid://vrp1dukmiq17" path="res://Scripts/Player/PlayerController.gd" id="1_2be4l"]
+[ext_resource type="Texture2D" uid="uid://dx8om2ecwbj7c" path="res://Artwork/Textures/icon.svg" id="2_3mwrl"]
+[ext_resource type="Texture2D" uid="uid://bi73bgfo5lj6y" path="res://Artwork/Placeholder/placeholder_idle.png" id="3_g0g1r"]
+[ext_resource type="Script" uid="uid://c77oddhm0ylxd" path="res://Scripts/Player/PlayerAnimController.gd" id="3_y00gc"]
+[ext_resource type="Texture2D" uid="uid://dishd4vr77cgq" path="res://Artwork/Placeholder/placeholder_alien.png" id="4_3pjhv"]
+[ext_resource type="Script" uid="uid://dnjw665d0a14v" path="res://Scripts/Managers/input_manager.gd" id="5_3pjhv"]
+[ext_resource type="AudioStream" uid="uid://dl2xb425sa3te" path="res://Audio/SFX/SFX_Jump.wav" id="6_cd1ue"]
+[ext_resource type="PackedScene" uid="uid://ca05xg7hs0n7" path="res://Scenes/Objects/key.tscn" id="9_yymet"]
+[ext_resource type="PackedScene" uid="uid://bd6aku4fiptv0" path="res://Scenes/Objects/key_door.tscn" id="10_f837q"]
+[ext_resource type="PackedScene" uid="uid://dg8bmyb83f5j3" path="res://Scenes/Objects/code_door.tscn" id="11_dviqd"]
+[ext_resource type="PackedScene" uid="uid://dgwcl5odvkmeb" path="res://Scenes/Objects/passcode.tscn" id="12_fv6mm"]
+[ext_resource type="Script" uid="uid://sewtyilslknk" path="res://Scripts/Objects/hazard.gd" id="13_dviqd"]
+[ext_resource type="Texture2D" uid="uid://b0x30jyi70ull" path="res://Artwork/Placeholder/spike_placeholder.png" id="14_fv6mm"]
+[ext_resource type="PackedScene" uid="uid://b2yqrsops4wta" path="res://Scenes/Objects/spring.tscn" id="15_cd1ue"]
+[ext_resource type="AudioStream" uid="uid://du8mbhlm1rkp7" path="res://Audio/SFX/SFX_Hit.wav" id="15_fv6mm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_876be"]
+atlas = ExtResource("4_3pjhv")
+region = Rect2(0, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xmas2"]
+atlas = ExtResource("4_3pjhv")
+region = Rect2(32, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ehpa4"]
+atlas = ExtResource("4_3pjhv")
+region = Rect2(64, 0, 32, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fq6e3"]
+atlas = ExtResource("4_3pjhv")
+region = Rect2(96, 0, 32, 36)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gju3c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_g0g1r")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_g0g1r")
+}],
+"loop": true,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_876be")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xmas2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ehpa4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fq6e3")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y00gc"]
+size = Vector2(21, 33)
+
+[sub_resource type="GDScript" id="GDScript_f40ju"]
+script/source = "extends Node2D
+
+@export var items = []
+var current_item: Area2D = null
+
+func pickup(item: Area2D):
+	current_item = item
+	items.append(item)
+	print(\"Item added to inventory. Items array now holds \", items.size(), \" items.\")
+	item.queue_free()
+
+func use_item():
+	items[0].use()
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ffy13"]
+size = Vector2(19, 32.0443)
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_3mwrl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3mwrl"]
+size = Vector2(126.667, 118.634)
+
+[node name="MainScene" type="Node"]
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(-421, -1049)
+scale = Vector2(3, 3)
+script = ExtResource("1_2be4l")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Player"]
+position = Vector2(169, 530)
+sprite_frames = SubResource("SpriteFrames_gju3c")
+animation = &"jump"
+script = ExtResource("3_y00gc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+visible = false
+position = Vector2(169.5, 529.5)
+shape = SubResource("RectangleShape2D_y00gc")
+
+[node name="InputManager" type="Node2D" parent="Player"]
+script = ExtResource("5_3pjhv")
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2(330.667, 519)
+scale = Vector2(0.333333, 0.333333)
+
+[node name="ItemManager" type="Node2D" parent="Player"]
+script = SubResource("GDScript_f40ju")
+
+[node name="ItemPickupArea" type="Area2D" parent="Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/ItemPickupArea"]
+position = Vector2(169.667, 530)
+scale = Vector2(1, 1.00902)
+shape = SubResource("RectangleShape2D_ffy13")
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Player"]
+stream = ExtResource("6_cd1ue")
+
+[node name="TestFloor" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="TestFloor"]
+position = Vector2(576, 628.5)
+scale = Vector2(9, 0.320313)
+texture = ExtResource("2_3mwrl")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="TestFloor/Sprite2D"]
+physics_material_override = SubResource("PhysicsMaterial_3mwrl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestFloor/Sprite2D/StaticBody2D"]
+position = Vector2(0.33334, -4.68286)
+shape = SubResource("RectangleShape2D_3mwrl")
+
+[node name="Key" parent="." instance=ExtResource("9_yymet")]
+position = Vector2(339, 561)
+
+[node name="KeyDoor" parent="." instance=ExtResource("10_f837q")]
+position = Vector2(512, 551)
+
+[node name="CodeDoor" parent="." instance=ExtResource("11_dviqd")]
+position = Vector2(795, 552)
+
+[node name="Passcode" parent="." instance=ExtResource("12_fv6mm")]
+
+[node name="Spike" type="Area2D" parent="."]
+position = Vector2(290, 586)
+script = ExtResource("13_dviqd")
+
+[node name="Sprite2D" type="Sprite2D" parent="Spike"]
+texture = ExtResource("14_fv6mm")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Spike"]
+polygon = PackedVector2Array(0, -17, 16, 18, -16, 18)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Spike"]
+position = Vector2(-290, -586)
+stream = ExtResource("15_fv6mm")
+playback_type = 1
+
+[node name="Spring" parent="." instance=ExtResource("15_cd1ue")]
+position = Vector2(46, 407)
+rotation = 1.5708
+
+[connection signal="body_entered" from="Player/ItemPickupArea" to="Player" method="_on_item_pickup_area_body_entered"]
+[connection signal="body_entered" from="Player/ItemPickupArea" to="Player/ItemManager" method="_on_item_pickup_area_body_entered"]
+[connection signal="body_entered" from="Spike" to="Spike" method="_on_body_entered"]

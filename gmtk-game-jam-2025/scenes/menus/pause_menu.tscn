@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://deo0t4m1xst7u"]
 
-[ext_resource type="Script" uid="uid://bqd5ld18stih1" path="res://Script/menus/pause_menu.gd" id="1_fwndu"]
+[ext_resource type="Script" uid="uid://bqd5ld18stih1" path="res://Scripts/Menus/pause_menu.gd" id="1_fwndu"]
 
 [node name="PauseMenu" type="Control" node_paths=PackedStringArray("enter_focus")]
 layout_mode = 3

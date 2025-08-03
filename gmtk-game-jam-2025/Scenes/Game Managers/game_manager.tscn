@@ -1,0 +1,16 @@
+[gd_scene load_steps=6 format=3 uid="uid://cxgsmi5bwe0po"]
+
+[ext_resource type="Script" uid="uid://dkojdv7fxt0pi" path="res://Scripts/Managers/game_manager.gd" id="1_bx5pk"]
+[ext_resource type="Script" uid="uid://bh0apdh8prcyk" path="res://Scripts/Resources/level_data.gd" id="2_nj68w"]
+[ext_resource type="Resource" uid="uid://q6y0ni4oq71d" path="res://Resources/LevelData/level_0/level_0.tres" id="3_p1l7q"]
+[ext_resource type="Resource" uid="uid://dlj1bebwbir2n" path="res://Resources/LevelData/level_1/level_1.tres" id="4_fqbjr"]
+[ext_resource type="AudioStream" uid="uid://saxsixv47xw1" path="res://Audio/Music/MUSIC_gameplay.wav" id="5_lmkqt"]
+
+[node name="GameManager" type="Node"]
+process_mode = 3
+script = ExtResource("1_bx5pk")
+levels = Array[ExtResource("2_nj68w")]([ExtResource("3_p1l7q"), ExtResource("4_fqbjr")])
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("5_lmkqt")
