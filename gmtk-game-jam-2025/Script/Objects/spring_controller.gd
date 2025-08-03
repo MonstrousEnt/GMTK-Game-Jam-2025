@@ -7,6 +7,7 @@ extends Area2D
 func _on_body_entered(body) -> void:
 	if body is Player:
 		body.player_anim_controller.stop()
+		$AudioStreamPlayer2D.play()
 		body.is_sprung = true
 		body.spring_timer = spring_duration
 		# Apply direction to the player's velocity based on spring power.
